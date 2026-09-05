@@ -1,1 +1,0 @@
-components\news-media-gallery.tsx
