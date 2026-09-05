@@ -1,0 +1,182 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+:root {
+  --background: #fffced;
+  --foreground: #294a3b;
+  --card: #fffced;
+  --card-foreground: #294a3b;
+  --popover: #fffced;
+  --popover-foreground: #294a3b;
+  --primary: #184d39;
+  --primary-foreground: #fffced;
+  --secondary: #c7db95;
+  --secondary-foreground: #184d39;
+  --muted: #f1f5e2;
+  --muted-foreground: #617268;
+  --accent: #c7db95;
+  --accent-foreground: #184d39;
+  --destructive: #b74234;
+  --border: #d8d9c7;
+  --input: #d8d9c7;
+  --ring: #c7db95;
+  --radius: 1rem;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) - 6px);
+  --radius-md: calc(var(--radius) - 3px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 8px);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5.5rem;
+}
+
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: "Segoe UI", Arial, sans-serif;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+button,
+a,
+input,
+textarea,
+select {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button,
+a {
+  touch-action: manipulation;
+}
+
+::selection {
+  background: #c7db95;
+  color: #184d39;
+}
+
+/*
+ * Georgia co the bi loi shaping voi mot so ky tu Viet co 2 dau tren Chromium/Windows
+ * (vi du: ắ, ầ, ề), lam chu bi tach nhu "bắ t", "đầ u".
+ * Times New Roman ho tro bo ky tu Viet day du va giu duoc phong cach serif cua giao dien.
+ */
+.font-display {
+  font-family: "Times New Roman", Times, serif;
+  font-kerning: normal;
+  font-variant-ligatures: none;
+  font-feature-settings: "kern" 1, "liga" 0;
+  letter-spacing: normal !important;
+  word-spacing: normal;
+}
+
+.container-shell {
+  width: min(100% - 2rem, 76rem);
+  margin-inline: auto;
+}
+
+.paper-texture {
+  background-image:
+    radial-gradient(circle at 12% 8%, rgb(255 255 255 / 0.8), transparent 24rem),
+    radial-gradient(circle at 88% 68%, rgb(199 219 149 / 0.38), transparent 28rem);
+}
+
+.soft-grid {
+  background-image:
+    linear-gradient(rgb(24 77 57 / 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(24 77 57 / 0.055) 1px, transparent 1px);
+  background-size: 30px 30px;
+}
+
+.leaf-shadow {
+  box-shadow: 0 24px 70px rgb(24 77 57 / 0.11);
+}
+
+.focus-ring {
+  outline: none;
+}
+
+.focus-ring:focus-visible {
+  box-shadow: 0 0 0 4px rgb(199 219 149 / 0.50);
+}
+
+.menu-card-image {
+  transition: transform 550ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.menu-card:hover .menu-card-image {
+  transform: scale(1.035);
+}
+
+.page-transition {
+  min-height: calc(100svh - 76px);
+  animation: page-in 460ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  transform-origin: 50% 0;
+}
+
+@keyframes page-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.995);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (max-width: 640px) {
+  .container-shell {
+    width: min(100% - 1.25rem, 76rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* SWEET PEA BRAND PALETTE V2.9
+ * Main background: #fffced
+ * Accent / soft highlight: #c7db95
+ * Brand headings / primary: #184d39
+ */

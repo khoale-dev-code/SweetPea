@@ -1,0 +1,10 @@
+app\(site)\layout.tsx
+app\(site)\page.tsx
+app\(site)\about\page.tsx
+app\(site)\contact\page.tsx
+app\(site)\menu\page.tsx
+app\(site)\news\page.tsx
+app\(site)\news\[id]\page.tsx
+components\news-card.tsx
+components\page-hero.tsx
+components\page-transition.tsx

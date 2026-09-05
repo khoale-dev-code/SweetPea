@@ -1,0 +1,457 @@
+{
+  "exported_at": "2026-09-03T05:56:26.870Z",
+  "categories": [
+    {
+      "id": "27f9c403-5083-4afc-8288-b571bb744d59",
+      "name": "Coffee",
+      "slug": "coffee",
+      "sort_order": 1,
+      "is_visible": true
+    },
+    {
+      "id": "9b86ee2d-fe56-4375-8fce-2d5cc1e03491",
+      "name": "Latte / Matcha",
+      "slug": "latte-matcha",
+      "sort_order": 2,
+      "is_visible": true
+    },
+    {
+      "id": "825250ef-a4e9-4761-9437-dc6e67657e31",
+      "name": "Fruit Tea",
+      "slug": "fruit-tea",
+      "sort_order": 3,
+      "is_visible": true
+    },
+    {
+      "id": "a6faee43-092f-4895-ab16-f40b51381b42",
+      "name": "Milk / Yogurt",
+      "slug": "milk-yogurt",
+      "sort_order": 4,
+      "is_visible": true
+    },
+    {
+      "id": "5d60348d-85d2-4fe9-84df-230f6152b028",
+      "name": "Bánh tráng",
+      "slug": "banh-trang",
+      "sort_order": 5,
+      "is_visible": true
+    },
+    {
+      "id": "3443181e-267c-4477-ba77-6ade0533e2f3",
+      "name": "Topping",
+      "slug": "topping",
+      "sort_order": 6,
+      "is_visible": true
+    }
+  ],
+  "items": [
+    {
+      "id": "ce738cbe-724f-4a58-af23-987d96c5aeeb",
+      "category_id": "27f9c403-5083-4afc-8288-b571bb744d59",
+      "name": "Cà phê đen",
+      "price": 20000,
+      "is_available": true,
+      "sort_order": 1
+    },
+    {
+      "id": "ba795eb1-0f74-428d-a4a5-0c6706f93e41",
+      "category_id": "27f9c403-5083-4afc-8288-b571bb744d59",
+      "name": "Cà phê sữa",
+      "price": 22000,
+      "is_available": true,
+      "sort_order": 2
+    },
+    {
+      "id": "7f2279f2-f658-4585-a558-d8d38b1214b8",
+      "category_id": "27f9c403-5083-4afc-8288-b571bb744d59",
+      "name": "Cà phê muối",
+      "price": 35000,
+      "is_available": true,
+      "sort_order": 3
+    },
+    {
+      "id": "ac830947-e73b-4fb9-96b7-cc7cdc0a0d99",
+      "category_id": "27f9c403-5083-4afc-8288-b571bb744d59",
+      "name": "Cà phê kem trứng",
+      "price": 38000,
+      "is_available": true,
+      "sort_order": 4
+    },
+    {
+      "id": "385db83f-c757-4343-ac76-f0c2801f7c81",
+      "category_id": "27f9c403-5083-4afc-8288-b571bb744d59",
+      "name": "Cà phê sữa thái",
+      "price": 35000,
+      "is_available": true,
+      "sort_order": 5
+    },
+    {
+      "id": "31ab4e07-6a8d-4799-8306-74f38735ff0d",
+      "category_id": "27f9c403-5083-4afc-8288-b571bb744d59",
+      "name": "Bạc sỉu đá",
+      "price": 28000,
+      "is_available": true,
+      "sort_order": 6
+    },
+    {
+      "id": "d4856f66-7d79-450b-b6a9-a729b23d71fd",
+      "category_id": "27f9c403-5083-4afc-8288-b571bb744d59",
+      "name": "Bạc sỉu kem muối",
+      "price": 35000,
+      "is_available": true,
+      "sort_order": 7
+    },
+    {
+      "id": "28846eec-d013-4011-a3b2-46f7764e84da",
+      "category_id": "27f9c403-5083-4afc-8288-b571bb744d59",
+      "name": "Cacao đá",
+      "price": 28000,
+      "is_available": true,
+      "sort_order": 8
+    },
+    {
+      "id": "bc1a833a-4c74-4b09-a146-905e8bb117fe",
+      "category_id": "27f9c403-5083-4afc-8288-b571bb744d59",
+      "name": "Cacao phô mai",
+      "price": 35000,
+      "is_available": true,
+      "sort_order": 9
+    },
+    {
+      "id": "b7bc39ff-8958-4e95-b61f-2f4d8f1d3906",
+      "category_id": "27f9c403-5083-4afc-8288-b571bb744d59",
+      "name": "Cacao kem muối",
+      "price": 35000,
+      "is_available": true,
+      "sort_order": 10
+    },
+    {
+      "id": "9106ebb7-595a-4cba-9411-80161f1a2e5d",
+      "category_id": "27f9c403-5083-4afc-8288-b571bb744d59",
+      "name": "Cacao kem trứng",
+      "price": 39000,
+      "is_available": true,
+      "sort_order": 11
+    },
+    {
+      "id": "f416de8d-fb26-4510-b88f-44175d80b5c2",
+      "category_id": "9b86ee2d-fe56-4375-8fce-2d5cc1e03491",
+      "name": "Matcha latte",
+      "price": 35000,
+      "is_available": true,
+      "sort_order": 20
+    },
+    {
+      "id": "659fcb48-d609-495d-aa7a-0a281f66f2df",
+      "category_id": "9b86ee2d-fe56-4375-8fce-2d5cc1e03491",
+      "name": "Matcha latte Oatside milk",
+      "price": 40000,
+      "is_available": true,
+      "sort_order": 21
+    },
+    {
+      "id": "a5a7c32a-a6d3-42e1-8492-f93958e0387a",
+      "category_id": "9b86ee2d-fe56-4375-8fce-2d5cc1e03491",
+      "name": "Matcha latte kem muối",
+      "price": 40000,
+      "is_available": true,
+      "sort_order": 22
+    },
+    {
+      "id": "11fff9a3-1ce6-4b0d-afdf-29d994651c5d",
+      "category_id": "9b86ee2d-fe56-4375-8fce-2d5cc1e03491",
+      "name": "Matcha latte kem dừa",
+      "price": 45000,
+      "is_available": true,
+      "sort_order": 23
+    },
+    {
+      "id": "8c97645f-8858-4617-93ac-0fa4e285accb",
+      "category_id": "9b86ee2d-fe56-4375-8fce-2d5cc1e03491",
+      "name": "Matcha latte coffee",
+      "price": 38000,
+      "is_available": true,
+      "sort_order": 24
+    },
+    {
+      "id": "82bca5ac-7336-44b1-8874-4e1bcb5a9166",
+      "category_id": "9b86ee2d-fe56-4375-8fce-2d5cc1e03491",
+      "name": "Matcha latte coffee Oatside",
+      "price": 43000,
+      "is_available": true,
+      "sort_order": 25
+    },
+    {
+      "id": "26a7e1a9-baaa-423f-8e7a-e97db3a8079d",
+      "category_id": "9b86ee2d-fe56-4375-8fce-2d5cc1e03491",
+      "name": "Matcha latte milk foam Oatside",
+      "price": 45000,
+      "is_available": true,
+      "sort_order": 26
+    },
+    {
+      "id": "589231ea-0135-4687-8ff7-816cbe655584",
+      "category_id": "9b86ee2d-fe56-4375-8fce-2d5cc1e03491",
+      "name": "Matcha kem dừa Oatside",
+      "price": 50000,
+      "is_available": true,
+      "sort_order": 27
+    },
+    {
+      "id": "af2eedf5-2564-47ea-96f7-9e6ee49fa69a",
+      "category_id": "825250ef-a4e9-4761-9437-dc6e67657e31",
+      "name": "Trà đào",
+      "price": 36000,
+      "is_available": true,
+      "sort_order": 40
+    },
+    {
+      "id": "270b430c-a8ac-4e0a-92bd-bb76566a4f82",
+      "category_id": "825250ef-a4e9-4761-9437-dc6e67657e31",
+      "name": "Trà vải thanh long",
+      "price": 39000,
+      "is_available": true,
+      "sort_order": 41
+    },
+    {
+      "id": "2392e002-485c-4d6b-84f4-172f1a479807",
+      "category_id": "825250ef-a4e9-4761-9437-dc6e67657e31",
+      "name": "Trà bưởi hồng",
+      "price": 36000,
+      "is_available": true,
+      "sort_order": 42
+    },
+    {
+      "id": "a6b38842-db19-4c39-b936-f60b4799092a",
+      "category_id": "825250ef-a4e9-4761-9437-dc6e67657e31",
+      "name": "Trà ổi hồng",
+      "price": 36000,
+      "is_available": true,
+      "sort_order": 43
+    },
+    {
+      "id": "3079665f-db20-40bc-b56e-d8e0646e3206",
+      "category_id": "825250ef-a4e9-4761-9437-dc6e67657e31",
+      "name": "Trà me muối ớt",
+      "price": 39000,
+      "is_available": true,
+      "sort_order": 44
+    },
+    {
+      "id": "b5f0a88b-54ed-4965-aff5-172dd1f1f95c",
+      "category_id": "825250ef-a4e9-4761-9437-dc6e67657e31",
+      "name": "Trà măng cụt",
+      "price": 39000,
+      "is_available": true,
+      "sort_order": 45
+    },
+    {
+      "id": "1a31d6e4-67ca-41df-8a31-5345d338295b",
+      "category_id": "825250ef-a4e9-4761-9437-dc6e67657e31",
+      "name": "Trà dâu tây",
+      "price": 36000,
+      "is_available": true,
+      "sort_order": 46
+    },
+    {
+      "id": "77d3d72f-50a7-4b0a-8013-7814e0e93106",
+      "category_id": "825250ef-a4e9-4761-9437-dc6e67657e31",
+      "name": "Trà dâu tằm",
+      "price": 36000,
+      "is_available": true,
+      "sort_order": 47
+    },
+    {
+      "id": "08d589f9-aff0-4891-98b2-96cc501c3a95",
+      "category_id": "825250ef-a4e9-4761-9437-dc6e67657e31",
+      "name": "Trà dưa lưới",
+      "price": 36000,
+      "is_available": true,
+      "sort_order": 48
+    },
+    {
+      "id": "9f23f327-68a4-4180-bd44-0fb2964d4f29",
+      "category_id": "825250ef-a4e9-4761-9437-dc6e67657e31",
+      "name": "Trà mãng cầu",
+      "price": 39000,
+      "is_available": true,
+      "sort_order": 49
+    },
+    {
+      "id": "07429c71-3d08-407a-8868-1f962a087cfc",
+      "category_id": "825250ef-a4e9-4761-9437-dc6e67657e31",
+      "name": "Trà xoài chanh dây",
+      "price": 36000,
+      "is_available": true,
+      "sort_order": 50
+    },
+    {
+      "id": "aa86f1be-883f-4c47-8ab1-1809c29d26ea",
+      "category_id": "825250ef-a4e9-4761-9437-dc6e67657e31",
+      "name": "Trà hoa atiso",
+      "price": 39000,
+      "is_available": true,
+      "sort_order": 51
+    },
+    {
+      "id": "e6cd2b10-88dc-4c61-9fa5-189f11ec7903",
+      "category_id": "825250ef-a4e9-4761-9437-dc6e67657e31",
+      "name": "Trà lài đác thơm",
+      "price": 40000,
+      "is_available": true,
+      "sort_order": 52
+    },
+    {
+      "id": "8ce216a0-0e0d-4861-b2ab-a24f0bd9df34",
+      "category_id": "825250ef-a4e9-4761-9437-dc6e67657e31",
+      "name": "Trà thơm thốt nốt",
+      "price": 39000,
+      "is_available": true,
+      "sort_order": 53
+    },
+    {
+      "id": "8892a741-32aa-4714-82f3-6e7bf56bb020",
+      "category_id": "825250ef-a4e9-4761-9437-dc6e67657e31",
+      "name": "Trà trái cây nhiệt đới",
+      "price": 39000,
+      "is_available": true,
+      "sort_order": 54
+    },
+    {
+      "id": "2418481a-fe9e-4656-b815-5143505cb937",
+      "category_id": "a6faee43-092f-4895-ab16-f40b51381b42",
+      "name": "Sữa tươi đường đen thốt nốt",
+      "price": 39000,
+      "is_available": true,
+      "sort_order": 70
+    },
+    {
+      "id": "80974528-76dc-4225-98e5-32abd7f78107",
+      "category_id": "a6faee43-092f-4895-ab16-f40b51381b42",
+      "name": "Trà sữa oolong",
+      "price": 40000,
+      "is_available": true,
+      "sort_order": 71
+    },
+    {
+      "id": "49ca3c12-ecdf-4356-a1f0-f240d966a6f1",
+      "category_id": "a6faee43-092f-4895-ab16-f40b51381b42",
+      "name": "Sữa chua đường đen thốt nốt",
+      "price": 40000,
+      "is_available": true,
+      "sort_order": 72
+    },
+    {
+      "id": "5b0b6296-72ff-43ff-be4f-a30673502e33",
+      "category_id": "a6faee43-092f-4895-ab16-f40b51381b42",
+      "name": "Sữa chua việt quất",
+      "price": 39000,
+      "is_available": true,
+      "sort_order": 73
+    },
+    {
+      "id": "7feb9fd9-54a9-4f5f-adfc-8902a187b4df",
+      "category_id": "a6faee43-092f-4895-ab16-f40b51381b42",
+      "name": "Sữa chua đào",
+      "price": 39000,
+      "is_available": true,
+      "sort_order": 74
+    },
+    {
+      "id": "f13f974f-ebde-40e6-9246-13208e6c8e1c",
+      "category_id": "a6faee43-092f-4895-ab16-f40b51381b42",
+      "name": "Sữa chua dâu tây",
+      "price": 39000,
+      "is_available": true,
+      "sort_order": 75
+    },
+    {
+      "id": "7e9a0ec1-516a-4f58-b975-8b4716860aee",
+      "category_id": "a6faee43-092f-4895-ab16-f40b51381b42",
+      "name": "Sữa chua dâu tằm",
+      "price": 39000,
+      "is_available": true,
+      "sort_order": 76
+    },
+    {
+      "id": "65882d2b-9a16-4a36-9bfa-22c66266390e",
+      "category_id": "5d60348d-85d2-4fe9-84df-230f6152b028",
+      "name": "Bánh tráng dẻo mỡ hành full topping",
+      "price": 30000,
+      "is_available": true,
+      "sort_order": 90
+    },
+    {
+      "id": "d8c3ed32-50d8-4ae7-ac99-0e6d01885184",
+      "category_id": "5d60348d-85d2-4fe9-84df-230f6152b028",
+      "name": "Bánh tráng dẻo mỡ hành chay",
+      "price": 15000,
+      "is_available": true,
+      "sort_order": 91
+    },
+    {
+      "id": "530a5c2b-ce67-4ecb-834b-9ad0112c972e",
+      "category_id": "5d60348d-85d2-4fe9-84df-230f6152b028",
+      "name": "Bánh tráng cuốn trộn muối bò",
+      "price": 30000,
+      "is_available": true,
+      "sort_order": 92
+    },
+    {
+      "id": "58443f33-e206-41d3-b26d-e1d31d080353",
+      "category_id": "3443181e-267c-4477-ba77-6ade0533e2f3",
+      "name": "Trân châu trắng",
+      "price": 10000,
+      "is_available": true,
+      "sort_order": 110
+    },
+    {
+      "id": "51a4dfbd-e6b0-412e-a15a-cac71d2c341d",
+      "category_id": "3443181e-267c-4477-ba77-6ade0533e2f3",
+      "name": "Hạt đác",
+      "price": 15000,
+      "is_available": true,
+      "sort_order": 111
+    },
+    {
+      "id": "974ec222-bbbe-46bd-a6aa-c4897a4b3284",
+      "category_id": "3443181e-267c-4477-ba77-6ade0533e2f3",
+      "name": "Thốt nốt",
+      "price": 20000,
+      "is_available": true,
+      "sort_order": 112
+    },
+    {
+      "id": "84341820-5096-4ae4-8c42-fed03cf387b2",
+      "category_id": "3443181e-267c-4477-ba77-6ade0533e2f3",
+      "name": "Kem muối",
+      "price": 15000,
+      "is_available": true,
+      "sort_order": 113
+    },
+    {
+      "id": "43998036-85e3-43e4-8098-0a023306c55e",
+      "category_id": "3443181e-267c-4477-ba77-6ade0533e2f3",
+      "name": "Kem trứng",
+      "price": 15000,
+      "is_available": true,
+      "sort_order": 114
+    },
+    {
+      "id": "2387da0e-82e2-446b-b8a1-987ad3e31038",
+      "category_id": "3443181e-267c-4477-ba77-6ade0533e2f3",
+      "name": "Thêm trứng cút",
+      "price": 5000,
+      "is_available": true,
+      "sort_order": 115
+    },
+    {
+      "id": "495c5f5e-51fa-4006-9b5b-ad52b304d311",
+      "category_id": "3443181e-267c-4477-ba77-6ade0533e2f3",
+      "name": "Thêm tóp mỡ",
+      "price": 10000,
+      "is_available": true,
+      "sort_order": 116
+    }
+  ]
+}
