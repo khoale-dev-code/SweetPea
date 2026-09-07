@@ -125,4 +125,3 @@ Các biến sau **phải luôn ở phía server**, không thêm tiền tố `NEX
 
 ---
 
-## ⚡ Tối ưu hiệu năng
