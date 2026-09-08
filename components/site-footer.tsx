@@ -4,11 +4,47 @@ import type { ReactNode } from "react";
 
 import type { ShopSettings } from "@/lib/types";
 
+/* ---------------------------------------------------------------------- */
+/*  Same four-petal blossom used across the site — the one recurring      */
+/*  accent shape, reused here instead of introducing a new ornament.      */
+/* ---------------------------------------------------------------------- */
+
+function PetalMark({
+  className = "h-4 w-4",
+  centerColor = "#F6CBD9",
+}: {
+  className?: string;
+  centerColor?: string;
+}) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} aria-hidden="true">
+      <circle cx="12" cy="6.5" r="4.4" fill="currentColor" />
+      <circle cx="12" cy="17.5" r="4.4" fill="currentColor" />
+      <circle cx="6.5" cy="12" r="4.4" fill="currentColor" />
+      <circle cx="17.5" cy="12" r="4.4" fill="currentColor" />
+      <circle cx="12" cy="12" r="3.1" fill={centerColor} />
+    </svg>
+  );
+}
+
 export function SiteFooter({ shop }: { shop: ShopSettings }) {
   const currentYear = new Date().getFullYear();
 
   return (
     <footer className="relative overflow-hidden bg-[#c7db95] text-[#184d39]">
+      {/* Scalloped top edge — a doily-style seam between the cream page and the footer. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-0 h-3.5"
+        style={{
+          backgroundImage:
+            "radial-gradient(circle at 10px 10px, #fffced 10px, transparent 10.5px)",
+          backgroundSize: "20px 20px",
+          backgroundRepeat: "repeat-x",
+          backgroundPosition: "top",
+        }}
+      />
+
       {/* Decorative background */}
       <div
         aria-hidden="true"
@@ -28,6 +64,11 @@ export function SiteFooter({ shop }: { shop: ShopSettings }) {
         <LeafDecoration />
       </div>
 
+      <PetalMark
+        className="pointer-events-none absolute left-[8%] top-[16%] hidden h-6 w-6 text-[#fffced]/50 lg:block"
+        centerColor="transparent"
+      />
+
       {/* CTA */}
       <div className="relative border-b border-[#184d39]/10">
         <div className="container-shell py-7 sm:py-9 lg:py-10">
@@ -43,9 +84,21 @@ export function SiteFooter({ shop }: { shop: ShopSettings }) {
               className="absolute -bottom-16 left-[38%] h-36 w-36 rounded-full bg-[#c7db95]/20 blur-3xl"
             />
 
+            <span className="absolute -right-3 -top-3 z-10 grid h-14 w-14 rotate-[10deg] place-items-center rounded-full border-2 border-dashed border-[#184d39]/20 bg-[#F6CBD9] shadow-[0_6px_14px_rgba(24,77,57,0.14)]">
+              <span className="flex flex-col items-center leading-none">
+                <PetalMark
+                  className="h-4 w-4 text-[#184d39]"
+                  centerColor="#FFFCED"
+                />
+                <span className="mt-1 text-[7px] font-extrabold uppercase tracking-[0.06em] text-[#184d39]">
+                  Mới
+                </span>
+              </span>
+            </span>
+
             <div className="relative max-w-2xl">
               <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-[#184d39]/10 bg-[#c7db95]/25 px-3 py-1.5">
-                <LeafSmallIcon />
+                <PetalMark className="h-3.5 w-3.5 text-[#C97B95]" />
 
                 <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#184d39]/65">
                   Sweet Pea · Bakery & Café
@@ -54,7 +107,7 @@ export function SiteFooter({ shop }: { shop: ShopSettings }) {
 
               <h2 className="font-display max-w-[700px] text-[27px] font-semibold leading-[1.12] tracking-[-0.025em] text-[#184d39] sm:text-[32px] lg:text-[38px]">
                 Một chút ngọt cho
-                <span className="italic text-[#6f8c56]">
+                <span className="italic text-[#C97B95] underline decoration-wavy decoration-2 decoration-[#F6CBD9] underline-offset-[6px]">
                   {" "}
                   ngày dịu dàng hơn.
                 </span>
@@ -80,7 +133,7 @@ export function SiteFooter({ shop }: { shop: ShopSettings }) {
 
               <Link
                 href="/contact"
-                className="inline-flex min-h-[46px] items-center justify-center rounded-full border border-[#184d39]/15 bg-white/40 px-5 text-sm font-semibold text-[#184d39] transition-all duration-300 hover:-translate-y-0.5 hover:border-[#184d39]/25 hover:bg-white/75"
+                className="inline-flex min-h-[46px] items-center justify-center rounded-full border border-[#C97B95]/30 bg-white/40 px-5 text-sm font-semibold text-[#184d39] transition-all duration-300 hover:-translate-y-0.5 hover:border-[#C97B95]/50 hover:bg-white/75"
               >
                 Liên hệ đặt bánh
               </Link>
@@ -99,7 +152,7 @@ export function SiteFooter({ shop }: { shop: ShopSettings }) {
               aria-label="Sweet Pea - Trang chủ"
               className="inline-flex items-center gap-3.5"
             >
-              <div className="flex h-[58px] w-[58px] shrink-0 items-center justify-center rounded-full border border-[#184d39]/10 bg-[#fffced] p-1.5 shadow-[0_8px_25px_rgba(24,77,57,0.08)]">
+              <div className="flex h-[58px] w-[58px] shrink-0 items-center justify-center rounded-full border-2 border-dashed border-[#184d39]/15 bg-[#fffced] p-1.5 shadow-[0_8px_25px_rgba(24,77,57,0.08)]">
                 <Image
                   src="/sweet-pea-logo.png"
                   alt="Sweet Pea"
@@ -235,7 +288,11 @@ export function SiteFooter({ shop }: { shop: ShopSettings }) {
         </div>
 
         {/* Divider */}
-        <div className="mt-10 h-px bg-[#184d39]/10 lg:mt-12" />
+        <div className="mt-10 flex items-center gap-3 lg:mt-12">
+          <span className="h-px flex-1 border-t border-dashed border-[#184d39]/18" />
+          <PetalMark className="h-3.5 w-3.5 shrink-0 text-[#184d39]/25" />
+          <span className="h-px flex-1 border-t border-dashed border-[#184d39]/18" />
+        </div>
 
         {/* Bottom */}
         <div className="flex flex-col gap-4 pt-6 sm:flex-row sm:items-center sm:justify-between">
@@ -254,19 +311,13 @@ export function SiteFooter({ shop }: { shop: ShopSettings }) {
               Freshly baked daily
             </span>
 
-            <span
-              aria-hidden="true"
-              className="hidden h-1 w-1 rounded-full bg-[#184d39]/35 sm:block"
-            />
+            <PetalMark className="hidden h-2.5 w-2.5 text-[#C97B95]/60 sm:block" />
 
             <span>
               Est. 2022
             </span>
 
-            <span
-              aria-hidden="true"
-              className="hidden h-1 w-1 rounded-full bg-[#184d39]/35 sm:block"
-            />
+            <PetalMark className="hidden h-2.5 w-2.5 text-[#C97B95]/60 sm:block" />
 
             <Link
               href="/admin"
@@ -307,7 +358,8 @@ function FooterHeading({
   children: ReactNode;
 }) {
   return (
-    <h3 className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#184d39]">
+    <h3 className="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.2em] text-[#184d39]">
+      <PetalMark className="h-3 w-3 text-[#C97B95]/70" />
       {children}
     </h3>
   );
@@ -325,7 +377,7 @@ function FooterLink({
       href={href}
       className="group inline-flex items-center text-sm font-medium text-[#184d39]/62 transition-colors duration-300 hover:text-[#184d39]"
     >
-      <span className="mr-0 h-px w-0 bg-[#184d39] transition-all duration-300 group-hover:mr-2 group-hover:w-3" />
+      <span className="mr-0 h-px w-0 bg-[#C97B95] transition-all duration-300 group-hover:mr-2 group-hover:w-3" />
 
       {children}
     </Link>
@@ -341,7 +393,7 @@ function FooterInfo({
 }) {
   return (
     <div className="flex items-start gap-3">
-      <div className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#184d39]/8 bg-[#fffced]/45 text-[#184d39]">
+      <div className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-dashed border-[#184d39]/15 bg-[#fffced]/65 text-[#184d39]">
         {icon}
       </div>
 

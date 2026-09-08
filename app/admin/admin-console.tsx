@@ -2,6 +2,9 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
+import { AboutPagePanel } from "@/components/admin/about-page-panel";
+import { NewsMediaDnDGrid } from "@/components/admin/news-media-dnd-grid";
+import Image from "next/image";
 import {
   ArrowLeft,
   CheckCircle2,
@@ -46,6 +49,7 @@ import {
   ReservationsPanel,
   useReservationAdminFeed,
 } from "@/components/admin/reservations-panel";
+import { HomepagePanel } from "@/components/admin/homepage-panel";
 import { CalendarCheck2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -57,7 +61,7 @@ const NEWS_CATEGORY_SLUG = "ban-tin";
 const PAGE_SIZE = 12;
 
 type AdminData = StoreData & { latencyMs: number };
-type AdminSection = "items" | "categories" | "news" | "reservations" | "shop";
+type AdminSection = "items" | "categories" | "homepage" | "news" | "reservations" | "shop" | "aboutPage";
 type ItemFilter = "all" | "available" | "hidden" | "featured";
 type NewsFilter = "all" | "published" | "draft" | "featured";
 type ItemDraft = Omit<MenuItem, "id"> & { id?: string };
@@ -729,6 +733,8 @@ export function AdminConsole() {
   const navItems: Array<{ id: AdminSection; label: string; note: string; icon: React.ReactNode; count?: number }> = [
     { id: "items", label: "Thực đơn", note: "Món & giá bán", icon: <ShoppingBag size={18} />, count: menuItems.length },
     { id: "categories", label: "Danh mục", note: "Nhóm món", icon: <Tags size={18} />, count: categories.length },
+    { id: "homepage", label: "Trang chủ", note: "Nội dung & media", icon: <Images size={18} /> },
+    { id: "aboutPage", label: "Giới thiệu", note: "Nội dung & hình ảnh", icon: <Leaf size={18} /> },
     { id: "news", label: "Bản tin", note: "Bài viết", icon: <Newspaper size={18} />, count: newsItems.length },
     { id: "reservations", label: "Đặt bàn", note: "Khách đặt chỗ", icon: <CalendarCheck2 size={18} />, count: reservationPendingCount || undefined },
     { id: "shop", label: "Thông tin quán", note: "Liên hệ & bản đồ", icon: <Settings size={18} /> },
@@ -738,43 +744,166 @@ export function AdminConsole() {
 
   return (
     <main className="min-h-screen bg-[#fffced] text-[#184d39]">
-      <div className="lg:grid lg:min-h-screen lg:grid-cols-[15.5rem_minmax(0,1fr)]">
-        <aside className="hidden border-r border-[#ddd7c9] bg-[#184d39] text-white lg:sticky lg:top-0 lg:flex lg:h-screen lg:flex-col">
-          <div className="border-b border-white/10 px-5 py-6">
-            <Link href="/" className="flex items-center gap-3">
-              <span className="grid h-11 w-11 place-items-center rounded-2xl bg-[#c7db95] text-[#184d39]">
-                <Leaf size={20} />
-              </span>
-              <span>
-                <strong className="font-display block text-xl font-semibold leading-none">Sweet Pea</strong>
-                <small className="mt-1 block text-[10px] font-bold uppercase tracking-[0.16em] text-white/50">Admin workspace</small>
-              </span>
-            </Link>
+      <div className="lg:grid lg:min-h-screen lg:grid-cols-[17rem_minmax(0,1fr)]">
+        <aside
+          data-admin-sidebar-version="4.5"
+          className="relative hidden overflow-hidden border-r border-[#dce6cf] bg-[#fffdf7] text-[#184d39] lg:sticky lg:top-0 lg:flex lg:h-screen lg:flex-col"
+        >
+          {/* soft ambient color */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute -left-20 -top-20 h-56 w-56 rounded-full bg-[#c7db95]/35 blur-3xl"
+          />
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute -right-24 top-[24%] h-52 w-52 rounded-full bg-[#fde8ef]/75 blur-3xl"
+          />
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute -bottom-20 -left-16 h-48 w-48 rounded-full bg-[#f3b8d3]/18 blur-3xl"
+          />
+
+          {/* decorative flower top */}
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 64 64"
+            className="pointer-events-none absolute right-2 top-3 h-14 w-14 rotate-12 text-[#f3b8d3]/45"
+          >
+            <circle cx="32" cy="13" r="8" fill="currentColor" />
+            <circle cx="49" cy="26" r="8" fill="currentColor" />
+            <circle cx="43" cy="47" r="8" fill="currentColor" />
+            <circle cx="21" cy="47" r="8" fill="currentColor" />
+            <circle cx="15" cy="26" r="8" fill="currentColor" />
+            <circle cx="32" cy="31" r="7" fill="#c7db95" />
+          </svg>
+
+          {/* BRAND */}
+          <div className="relative z-10 p-3">
+            <div className="relative overflow-hidden rounded-[1.6rem] border border-[#184d39]/8 bg-white/65 p-3 shadow-[0_12px_30px_rgba(24,77,57,0.06)] backdrop-blur-sm">
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute -right-5 -top-6 h-20 w-20 rounded-full bg-[#fde8ef]/85 blur-xl"
+              />
+
+              <Link href="/" className="relative flex items-center gap-3">
+                <span className="relative grid h-14 w-14 shrink-0 place-items-center rounded-[1.15rem] bg-[linear-gradient(135deg,#ffffff_0%,#fff7f9_100%)] shadow-[0_7px_18px_rgba(24,77,57,0.08)] ring-1 ring-[#f3b8d3]/45">
+                  <Image
+                    src="/sweet-pea-logo.png"
+                    alt="Sweet Pea"
+                    width={56}
+                    height={56}
+                    className="h-[48px] w-[48px] rounded-full object-contain"
+                    priority
+                  />
+
+                  <span className="absolute -bottom-1 -right-1 grid h-5 w-5 place-items-center rounded-full border-2 border-[#fffdf7] bg-[#f3b8d3] text-[9px] text-white">
+                    {"\u2665"}
+                  </span>
+                </span>
+
+                <span className="min-w-0">
+                  <strong className="font-display block truncate text-[1.22rem] font-semibold leading-none tracking-[-0.02em] text-[#184d39]">
+                    Sweet Pea
+                  </strong>
+
+                  <small className="mt-1.5 block text-[9px] font-extrabold uppercase tracking-[0.17em] text-[#71866f]">
+                    Admin workspace
+                  </small>
+
+                  <span className="mt-1.5 block text-[9px] font-semibold text-[#c0708f]">
+                    good food {"\u00b7"} brighter days
+                  </span>
+                </span>
+              </Link>
+            </div>
           </div>
 
-          <nav className="flex-1 px-3 py-5" aria-label="Quản trị Sweet Pea">
-            <p className="px-3 text-[10px] font-extrabold uppercase tracking-[0.18em] text-white/35">Quản lý</p>
+          {/* NAVIGATION */}
+          <nav
+            className="relative z-10 flex-1 overflow-y-auto px-3 pb-4 pt-2"
+            aria-label="Sweet Pea Admin"
+          >
+            <div className="flex items-center gap-2 px-3">
+              <p className="text-[9px] font-extrabold uppercase tracking-[0.2em] text-[#66806f]">
+                {"QU\u1ea2N L\u00dd"}
+              </p>
+
+              <span className="h-px flex-1 bg-[#184d39]/8" />
+
+              <span className="grid h-5 w-5 place-items-center rounded-full bg-[#fde8ef] text-[#bd6888]">
+                <svg viewBox="0 0 24 24" className="h-3 w-3" aria-hidden="true">
+                  <circle cx="12" cy="5" r="3.2" fill="currentColor" />
+                  <circle cx="18.5" cy="10.2" r="3.2" fill="currentColor" />
+                  <circle cx="16" cy="17.5" r="3.2" fill="currentColor" />
+                  <circle cx="8" cy="17.5" r="3.2" fill="currentColor" />
+                  <circle cx="5.5" cy="10.2" r="3.2" fill="currentColor" />
+                  <circle cx="12" cy="12" r="2.8" fill="#c7db95" />
+                </svg>
+              </span>
+            </div>
+
             <div className="mt-3 grid gap-1.5">
               {navItems.map((item) => {
                 const active = section === item.id;
+
                 return (
                   <button
                     key={item.id}
                     type="button"
                     onClick={() => setSection(item.id)}
-                    className={`group flex w-full items-center gap-3 rounded-2xl px-3 py-3 text-left transition ${
-                      active ? "bg-[#c7db95] text-[#184d39]" : "text-white/72 hover:bg-white/10 hover:text-white"
+                    className={`group relative flex w-full items-center gap-3 overflow-hidden rounded-[1.25rem] border px-2.5 py-2.5 text-left transition-all duration-300 ${
+                      active
+                        ? "border-[#b6ce78]/55 bg-[linear-gradient(135deg,#d7e8a7_0%,#edf4d3_62%,#fde8ef_100%)] text-[#184d39] shadow-[0_10px_24px_rgba(24,77,57,0.08)]"
+                        : "border-transparent text-[#416558] hover:border-[#f3b8d3]/45 hover:bg-[#fff7f9] hover:text-[#184d39]"
                     }`}
                   >
-                    <span className={`grid h-9 w-9 shrink-0 place-items-center rounded-xl ${active ? "bg-white text-[#184d39]" : "bg-white/10"}`}>
+                    {active ? (
+                      <>
+                        <span
+                          aria-hidden="true"
+                          className="pointer-events-none absolute -right-5 -top-6 h-16 w-16 rounded-full bg-[#f3b8d3]/25 blur-xl"
+                        />
+                        <span
+                          aria-hidden="true"
+                          className="absolute right-3 top-2 h-2 w-2 rounded-full bg-[#ef9fbc] shadow-[0_0_0_4px_rgba(243,184,211,0.20)]"
+                        />
+                      </>
+                    ) : null}
+
+                    <span
+                      className={`relative grid h-10 w-10 shrink-0 place-items-center rounded-[1rem] transition-all duration-300 ${
+                        active
+                          ? "bg-white text-[#184d39] shadow-[0_6px_16px_rgba(24,77,57,0.08)] ring-1 ring-[#f3b8d3]/40"
+                          : "bg-[#edf4df] text-[#456857] group-hover:-rotate-3 group-hover:bg-[#fde8ef] group-hover:text-[#b86182]"
+                      }`}
+                    >
                       {item.icon}
                     </span>
-                    <span className="min-w-0 flex-1">
-                      <strong className="block truncate text-sm font-bold">{item.label}</strong>
-                      <small className={`mt-0.5 block truncate text-[11px] ${active ? "text-[#6f8176]" : "text-white/38"}`}>{item.note}</small>
+
+                    <span className="relative min-w-0 flex-1">
+                      <strong className="block truncate text-[13px] font-extrabold">
+                        {item.label}
+                      </strong>
+
+                      <small
+                        className={`mt-0.5 block truncate text-[10px] font-medium ${
+                          active
+                            ? "text-[#667a69]"
+                            : "text-[#84958b] group-hover:text-[#8b7380]"
+                        }`}
+                      >
+                        {item.note}
+                      </small>
                     </span>
+
                     {item.count !== undefined ? (
-                      <span className={`rounded-full px-2 py-1 text-[10px] font-extrabold ${active ? "bg-[#c7db95] text-[#184d39]" : "bg-white/10 text-white/60"}`}>
+                      <span
+                        className={`relative rounded-full px-2 py-1 text-[9px] font-extrabold transition ${
+                          active
+                            ? "bg-white/80 text-[#184d39] ring-1 ring-[#184d39]/8"
+                            : "bg-[#e9f1dd] text-[#60776b] group-hover:bg-[#fde8ef] group-hover:text-[#ad5c7a]"
+                        }`}
+                      >
                         {item.count}
                       </span>
                     ) : null}
@@ -784,13 +913,55 @@ export function AdminConsole() {
             </div>
           </nav>
 
-          <div className="border-t border-white/10 p-3">
-            <Link href="/" className="flex min-h-11 items-center gap-3 rounded-xl px-3 text-sm font-semibold text-white/70 transition hover:bg-white/10 hover:text-white">
-              <Eye size={17} /> Xem website
-            </Link>
-            <button type="button" onClick={logout} className="mt-1 flex min-h-11 w-full items-center gap-3 rounded-xl px-3 text-sm font-semibold text-white/70 transition hover:bg-white/10 hover:text-white">
-              <LogOut size={17} /> Đăng xuất
-            </button>
+          {/* FOOTER ACTIONS */}
+          <div className="relative z-10 p-3 pt-0">
+            <div className="relative overflow-hidden rounded-[1.45rem] border border-[#184d39]/8 bg-white/55 p-2 shadow-[0_10px_28px_rgba(24,77,57,0.05)] backdrop-blur-sm">
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 64 64"
+                className="pointer-events-none absolute -bottom-5 -right-5 h-20 w-20 -rotate-12 text-[#f3b8d3]/22"
+              >
+                <circle cx="32" cy="13" r="8" fill="currentColor" />
+                <circle cx="49" cy="26" r="8" fill="currentColor" />
+                <circle cx="43" cy="47" r="8" fill="currentColor" />
+                <circle cx="21" cy="47" r="8" fill="currentColor" />
+                <circle cx="15" cy="26" r="8" fill="currentColor" />
+                <circle cx="32" cy="31" r="7" fill="#c7db95" />
+              </svg>
+
+              <Link
+                href="/"
+                className="group relative flex min-h-10 items-center gap-3 rounded-[1rem] px-3 text-[12px] font-bold text-[#426353] transition hover:bg-[#eef4df] hover:text-[#184d39]"
+              >
+                <span className="grid h-8 w-8 place-items-center rounded-xl bg-[#edf4df] text-[#4d6d5c] transition group-hover:bg-[#c7db95] group-hover:text-[#184d39]">
+                  <Eye size={15} />
+                </span>
+
+                <span>Xem website</span>
+              </Link>
+
+              <button
+                type="button"
+                onClick={logout}
+                className="group relative mt-1 flex min-h-10 w-full items-center gap-3 rounded-[1rem] px-3 text-left text-[12px] font-bold text-[#956376] transition hover:bg-[#fde8ef] hover:text-[#a94f70]"
+              >
+                <span className="grid h-8 w-8 place-items-center rounded-xl bg-[#fff0f5] text-[#bc6a89] transition group-hover:bg-[#f3b8d3] group-hover:text-white">
+                  <LogOut size={15} />
+                </span>
+
+                <span>{"\u0110\u0103ng xu\u1ea5t"}</span>
+              </button>
+
+              <div className="relative mt-2 flex items-center justify-between gap-2 border-t border-[#184d39]/7 px-3 pt-2">
+                <span className="text-[8px] font-semibold italic tracking-[0.02em] text-[#859b80]">
+                  {"B\u00e1nh ngon, ng\u00e0y th\u00eam ng\u1ecdt"}
+                </span>
+
+                <span className="text-[12px] text-[#e598b4]">
+                  {"\u2661"}
+                </span>
+              </div>
+            </div>
           </div>
         </aside>
 
@@ -836,16 +1007,33 @@ export function AdminConsole() {
             <section className="overflow-hidden rounded-[1.8rem] border border-[#ddd7c9] bg-[#fffced] shadow-[0_16px_50px_rgba(39,65,51,0.045)]">
               <div className="grid gap-5 px-5 py-5 sm:px-6 lg:grid-cols-[1fr_auto] lg:items-end lg:px-7">
                 <div>
-                  <p className="text-[11px] font-extrabold uppercase tracking-[0.17em] text-[#829478]">{section === "news" ? "Trung tâm nội dung" : "Tổng quan hôm nay"}</p>
-                  <h2 className="font-display mt-1 text-3xl font-semibold leading-tight text-[#184d39] sm:text-4xl">{section === "news" ? "Bản tin gọn, lên bài nhanh." : "Menu gọn, thao tác nhanh."}</h2>
-                  <p className="mt-2 max-w-2xl text-sm leading-6 text-[#718077]">{section === "news" ? "Thêm, sửa, ẩn/hiện hoặc đưa bài lên Nổi bật ngay tại danh sách. Bài nổi bật sẽ tự xuất hiện trên trang chủ sau khi lưu." : "Dữ liệu được lấy trực tiếp từ Supabase. Các thay đổi sẽ cập nhật lên website sau khi lưu."}</p>
+                  <p className="text-[11px] font-extrabold uppercase tracking-[0.17em] text-[#829478]">
+                    {section === "homepage" ? "Nội dung website" : section === "news" ? "Trung tâm nội dung" : "Tổng quan hôm nay"}
+                  </p>
+                  <h2 className="font-display mt-1 text-3xl font-semibold leading-tight text-[#184d39] sm:text-4xl">
+                    {section === "homepage" ? "Trang chủ, chỉnh ngay trong Admin." : section === "news" ? "Bản tin gọn, lên bài nhanh." : "Menu gọn, thao tác nhanh."}
+                  </h2>
+                  <p className="mt-2 max-w-2xl text-sm leading-6 text-[#718077]">
+                    {section === "homepage"
+                      ? "Đổi nội dung, ảnh, GIF hoặc video cho Hero và khu Không gian Sweet Pea. Mọi thay đổi được lưu trên Supabase và cập nhật ra website sau khi lưu."
+                      : section === "news"
+                        ? "Thêm, sửa, ẩn/hiện hoặc đưa bài lên Nổi bật ngay tại danh sách. Bài nổi bật sẽ tự xuất hiện trên trang chủ sau khi lưu."
+                        : "Dữ liệu được lấy trực tiếp từ Supabase. Các thay đổi sẽ cập nhật lên website sau khi lưu."}
+                  </p>
                 </div>
                 <div className="inline-flex w-fit items-center gap-2 rounded-full border border-[#c7db95] bg-[#c7db95] px-3 py-2 text-xs font-bold text-[#52705d]">
                   <span className="h-2 w-2 rounded-full bg-[#5b936c]" /> Supabase · {data.latencyMs} ms
                 </div>
               </div>
               <div className="grid border-t border-[#eee8dc] sm:grid-cols-2 xl:grid-cols-4">
-                {section === "news" ? (
+                {section === "homepage" ? (
+                  <>
+                    <Metric icon={<Images size={18} />} label="Khu vực" value="2" note="Hero & Không gian" />
+                    <Metric icon={<ImageUp size={18} />} label="Media" value="5" note="5 vị trí độc lập" />
+                    <Metric icon={<Film size={18} />} label="Định dạng" value="3" note="Ảnh · GIF · Video" />
+                    <Metric icon={<Save size={18} />} label="Cập nhật" value="1" note="Lưu một lần" />
+                  </>
+                ) : section === "news" ? (
                   <>
                     <Metric icon={<Newspaper size={18} />} label="Tổng bài" value={String(newsItems.length)} note="Trong hệ thống" />
                     <Metric icon={<Eye size={18} />} label="Đang hiển thị" value={String(newsPublishedCount)} note="Khách đang xem được" />
@@ -1021,7 +1209,9 @@ export function AdminConsole() {
               </section>
             ) : null}
 
+            {section === "homepage" ? <HomepagePanel /> : null}
             {section === "categories" ? <CategoriesPanel categories={categories} itemCounts={categoryCount} saving={saving} mutate={mutate} /> : null}
+            {section === "aboutPage" ? <AboutPagePanel /> : null}
             {section === "news" ? <NewsPanel items={newsItems} saving={saving} mutate={mutate} /> : null}
             {section === "reservations" ? <ReservationsPanel reservations={reservations} loading={reservationsLoading} error={reservationsError} refresh={refreshReservations} /> : null}
             {section === "shop" ? <ShopPanel shop={data.shop} saving={saving} mutate={mutate} /> : null}
@@ -1754,7 +1944,6 @@ function NewsPanel({ items, saving, mutate }: { items: MenuItem[]; saving: boole
   const [editorOpen, setEditorOpen] = useState(false);
   const [manualMediaUrl, setManualMediaUrl] = useState("");
   const [manualMediaType, setManualMediaType] = useState<NewsMediaKind>("image");
-  const mediaInputRef = useRef<HTMLInputElement | null>(null);
 
   const filtered = useMemo(() => {
     const needle = query.trim().toLocaleLowerCase("vi");
@@ -1842,15 +2031,6 @@ function NewsPanel({ items, saving, mutate }: { items: MenuItem[]; saving: boole
     }
   }
 
-  function handleMediaInputChange(event: React.ChangeEvent<HTMLInputElement>) {
-    // Copy the FileList immediately, then clear the input. Clearing is important in
-    // edit mode because it lets the user select the same image again after removing it.
-    const files = Array.from(event.currentTarget.files || []);
-    event.currentTarget.value = "";
-    if (!files.length) return;
-    void uploadMedia(files);
-  }
-
   function addManualMedia() {
     const url = manualMediaUrl.trim();
     if (!url || draft.media.length >= 12) return;
@@ -1873,6 +2053,25 @@ function NewsPanel({ items, saving, mutate }: { items: MenuItem[]; saving: boole
       if (target < 0 || target >= current.media.length) return current;
       const media = [...current.media];
       [media[index], media[target]] = [media[target], media[index]];
+      return { ...current, media };
+    });
+  }
+
+  function reorderMedia(sourceIndex: number, targetIndex: number) {
+    setDraft((current) => {
+      if (
+        sourceIndex === targetIndex ||
+        sourceIndex < 0 ||
+        targetIndex < 0 ||
+        sourceIndex >= current.media.length ||
+        targetIndex >= current.media.length
+      ) {
+        return current;
+      }
+
+      const media = [...current.media];
+      const [moved] = media.splice(sourceIndex, 1);
+      media.splice(targetIndex, 0, moved);
       return { ...current, media };
     });
   }
@@ -2021,58 +2220,45 @@ function NewsPanel({ items, saving, mutate }: { items: MenuItem[]; saving: boole
                       <span className="rounded-full bg-[#184d39] px-3 py-1.5 text-[10px] font-bold text-[#fffced]">{draft.media.length}/12</span>
                     </div>
 
-                    {draft.media.length ? (
-                      <div className="mt-4 grid gap-3 sm:grid-cols-2">
-                        {draft.media.map((media, index) => (
-                          <div key={`${media.type}-${media.url}`} className={`relative overflow-hidden rounded-2xl border-2 bg-[#fffced] ${draft.image_url === media.url ? "border-[#184d39]" : "border-[#184d39]/10"}`}>
-                            <div className="relative flex aspect-[16/10] items-center justify-center overflow-hidden bg-[#184d39]/[0.045]">
-                              {media.type === "video" ? <><video src={media.url} muted playsInline preload="metadata" className="h-full w-full object-contain" /><span className="absolute inset-0 grid place-items-center bg-[#184d39]/8 text-[#184d39]"><Film size={28} /></span></> : <img src={media.url} alt={`Media ${index + 1}`} className="h-full w-full object-contain" />}
-                              <span className="absolute left-2 top-2 rounded-full bg-[#184d39]/88 px-2 py-1 text-[9px] font-extrabold uppercase text-white">{media.type === "video" ? "Video" : media.type === "gif" ? "GIF" : `Ảnh ${index + 1}`}</span>
-                              {draft.image_url === media.url ? <span className="absolute right-2 top-2 rounded-full bg-[#c7db95] px-2 py-1 text-[9px] font-extrabold text-[#184d39]">Ảnh bìa</span> : null}
-                            </div>
-                            <div className="flex flex-wrap items-center justify-between gap-2 border-t border-[#184d39]/10 p-2.5">
-                              <div className="flex gap-1">
-                                <button type="button" disabled={index === 0} onClick={() => moveMedia(index, -1)} className="grid h-8 w-8 place-items-center rounded-lg border border-[#184d39]/10 bg-white text-[#184d39] disabled:opacity-30"><ChevronLeft size={14} /></button>
-                                <button type="button" disabled={index === draft.media.length - 1} onClick={() => moveMedia(index, 1)} className="grid h-8 w-8 place-items-center rounded-lg border border-[#184d39]/10 bg-white text-[#184d39] disabled:opacity-30"><ChevronRight size={14} /></button>
-                              </div>
-                              <div className="flex gap-1">
-                                {media.type !== "video" && draft.image_url !== media.url ? <button type="button" onClick={() => setDraft((current) => ({ ...current, image_url: media.url }))} className="h-8 rounded-lg border border-[#184d39]/10 bg-[#c7db95]/30 px-2.5 text-[10px] font-bold text-[#184d39]">Đặt bìa</button> : null}
-                                <button type="button" onClick={() => removeMedia(index)} className="grid h-8 w-8 place-items-center rounded-lg border border-red-200 bg-white text-red-600"><Trash2 size={14} /></button>
-                              </div>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    ) : <div className="mt-4 grid min-h-36 place-items-center rounded-2xl border border-dashed border-[#184d39]/18 bg-[#fffced]/70 text-center text-[#184d39]/55"><div><Images className="mx-auto" size={25} /><p className="mt-2 text-xs font-bold">Chưa có media cho bài viết</p></div></div>}
+                    <NewsMediaDnDGrid
+                      media={draft.media}
+                      coverUrl={draft.image_url}
+                      uploading={uploading}
+                      maxItems={12}
+                      onFiles={(files) => void uploadMedia(files)}
+                      onRemove={removeMedia}
+                      onMove={moveMedia}
+                      onReorder={reorderMedia}
+                      onSetCover={(url) => setDraft((current) => ({ ...current, image_url: url }))}
+                    />
 
-                    <div className="mt-4 grid gap-2 lg:grid-cols-[1fr_auto]">
-                      <div className="grid gap-2 sm:grid-cols-[7rem_1fr_auto]">
-                        <select value={manualMediaType} onChange={(event) => setManualMediaType(event.target.value as NewsMediaKind)} className="h-11 rounded-xl border border-[#184d39]/12 bg-[#fffced] px-3 text-sm font-semibold text-[#184d39] outline-none"><option value="image">Ảnh</option><option value="gif">GIF</option><option value="video">Video</option></select>
-                        <Input value={manualMediaUrl} onChange={(event) => setManualMediaUrl(event.target.value)} placeholder="Dán URL media https://..." className="h-11 rounded-xl border-[#184d39]/12 bg-[#fffced]" />
-                        <Button type="button" variant="outline" onClick={addManualMedia} disabled={!manualMediaUrl.trim() || draft.media.length >= 12} className="h-11 rounded-xl border-[#184d39]/12 bg-white px-4 text-[#184d39]">Thêm</Button>
-                      </div>
-                      <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-1">
-                        <input
-                          ref={mediaInputRef}
-                          type="file"
-                          accept="image/jpeg,image/png,image/webp,image/gif,video/mp4,video/webm,video/quicktime"
-                          multiple
-                          className="sr-only"
-                          onChange={handleMediaInputChange}
-                          disabled={uploading || draft.media.length >= 12}
-                        />
-                        <Button
-                          type="button"
-                          variant="outline"
-                          onClick={() => mediaInputRef.current?.click()}
-                          disabled={uploading || draft.media.length >= 12}
-                          className="h-11 rounded-xl border-dashed border-[#184d39]/22 bg-[#fffced] px-5 font-bold text-[#184d39] hover:bg-white"
-                        >
-                          {uploading ? <Loader2 className="animate-spin" size={17} /> : <ImageUp size={17} />}
-                          {uploading ? "Đang tải media..." : draft.id ? "Thêm ảnh / GIF / video" : "Chọn nhiều file"}
-                        </Button>
-                        {draft.id ? <p className="text-center text-[10px] font-medium leading-4 text-[#184d39]/50">Có thể thêm media mới khi đang sửa bài. Media cũ vẫn được giữ nguyên.</p> : null}
-                      </div>
+                    <div className="mt-4 grid gap-2 sm:grid-cols-[7rem_minmax(0,1fr)_auto]">
+                      <select
+                        value={manualMediaType}
+                        onChange={(event) => setManualMediaType(event.target.value as NewsMediaKind)}
+                        className="h-11 rounded-xl border border-[#184d39]/12 bg-[#fffced] px-3 text-sm font-semibold text-[#184d39] outline-none"
+                      >
+                        <option value="image">Ảnh</option>
+                        <option value="gif">GIF</option>
+                        <option value="video">Video</option>
+                      </select>
+
+                      <Input
+                        value={manualMediaUrl}
+                        onChange={(event) => setManualMediaUrl(event.target.value)}
+                        placeholder="Dán URL media https://..."
+                        className="h-11 rounded-xl border-[#184d39]/12 bg-[#fffced]"
+                      />
+
+                      <Button
+                        type="button"
+                        variant="outline"
+                        onClick={addManualMedia}
+                        disabled={!manualMediaUrl.trim() || draft.media.length >= 12}
+                        className="h-11 rounded-xl border-[#184d39]/12 bg-white px-4 text-[#184d39]"
+                      >
+                        Thêm URL
+                      </Button>
                     </div>
 
                     {uploadError ? <p className="mt-3 rounded-xl border border-red-100 bg-red-50 p-3 text-sm font-semibold text-red-700">{uploadError}</p> : null}

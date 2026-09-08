@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 import type { MenuCategory, MenuItem } from "@/lib/types";
 import { ProductImageCarousel } from "@/components/product-image-carousel";
+import { FloatingPetals, type Petal } from "@/components/floating-petals";
 
 function money(value: number) {
   return new Intl.NumberFormat("vi-VN").format(value) + "đ";
@@ -31,6 +32,30 @@ function phoneHref(phone?: string) {
   const normalized = phone.replace(/[^0-9+]/g, "");
   return normalized ? `tel:${normalized}` : "";
 }
+
+function PetalMark({
+  className = "h-4 w-4",
+  centerColor = "#F7DE94",
+}: {
+  className?: string;
+  centerColor?: string;
+}) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} aria-hidden="true">
+      <circle cx="12" cy="6.5" r="4.4" fill="currentColor" />
+      <circle cx="12" cy="17.5" r="4.4" fill="currentColor" />
+      <circle cx="6.5" cy="12" r="4.4" fill="currentColor" />
+      <circle cx="17.5" cy="12" r="4.4" fill="currentColor" />
+      <circle cx="12" cy="12" r="3.1" fill={centerColor} />
+    </svg>
+  );
+}
+
+const HERO_PETALS: Petal[] = [
+  { top: "10%", right: "10%", size: 30, color: "#F6CBD9", centerColor: "#FFFCED", delay: 0, duration: 7, rotate: 10 },
+  { top: "62%", right: "22%", size: 16, color: "#184d39", centerColor: "#F7DE94", delay: 1.3, duration: 8, rotate: -10, opacity: 0.4 },
+  { top: "16%", left: "4%", size: 18, color: "#F7DE94", centerColor: "#184d39", delay: 0.6, duration: 6.8, rotate: 6, opacity: 0.55 },
+];
 
 function MenuImageFallback({ compact = false }: { compact?: boolean }) {
   return (
@@ -315,15 +340,15 @@ function ProductDetail({
         role="dialog"
         aria-modal="true"
         aria-label={`Chi tiết ${product.name}`}
-        className="relative flex max-h-[92dvh] w-full flex-col overflow-hidden rounded-t-[1.8rem] border border-[#ddd4c3] bg-[#fffced] shadow-[0_-24px_80px_rgba(17,48,37,0.22)] sm:max-h-[820px] sm:max-w-[940px] sm:rounded-[2rem]"
+        className="relative flex max-h-[92dvh] w-full flex-col overflow-hidden rounded-t-[1.8rem] border border-[#184d39]/10 bg-[#fffced] shadow-[0_-24px_80px_rgba(17,48,37,0.22)] sm:max-h-[820px] sm:max-w-[940px] sm:rounded-[2rem]"
         onMouseDown={(event: any) => event.stopPropagation()}
       >
-        <div className="mx-auto mt-2 h-1.5 w-12 shrink-0 rounded-full bg-[#d4ccbd] sm:hidden" />
+        <div className="mx-auto mt-2 h-1.5 w-12 shrink-0 rounded-full bg-[#184d39]/15 sm:hidden" />
 
         <button
           type="button"
           onClick={onClose}
-          className="focus-ring absolute right-3 top-3 z-20 grid h-10 w-10 place-items-center rounded-full border border-[#d9d1c0] bg-[#fffced]/95 text-[#184d39] shadow-sm backdrop-blur sm:right-5 sm:top-5"
+          className="focus-ring absolute right-3 top-3 z-20 grid h-10 w-10 place-items-center rounded-full border border-[#184d39]/10 bg-[#fffced]/95 text-[#184d39] shadow-sm backdrop-blur sm:right-5 sm:top-5"
           aria-label="Đóng chi tiết sản phẩm"
         >
           <X size={18} />
@@ -335,7 +360,7 @@ function ProductDetail({
               <ProductGallery product={product} priority />
               <div className="pointer-events-none absolute left-4 top-4 z-20 flex flex-wrap gap-2">
                 {product.isFeatured && (
-                  <span className="inline-flex items-center gap-1.5 rounded-full bg-[#6f8b4c] px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-[0.08em] text-white shadow-sm">
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-[#184d39] px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-[0.08em] text-white shadow-sm">
                     <Sparkles size={11} /> Gợi ý
                   </span>
                 )}
@@ -353,19 +378,19 @@ function ProductDetail({
             </div>
 
             <div className="p-5 sm:p-8 lg:p-9">
-              <p className="text-[10px] font-extrabold uppercase tracking-[0.18em] text-[#7c8d70]">Chi tiết sản phẩm</p>
+              <p className="text-[10px] font-extrabold uppercase tracking-[0.18em] text-[#184d39]/45">Chi tiết sản phẩm</p>
               <h2 className="font-display mt-2 pr-10 text-3xl font-bold leading-[1.05] tracking-[-0.03em] text-[#184d39] sm:text-4xl">
                 {product.name}
               </h2>
-              <p className="mt-4 text-sm leading-6 text-[#6f7b74]">
+              <p className="mt-4 text-sm leading-6 text-[#184d39]/58">
                 {product.description || "Món được chuẩn bị tại Sweet Pea và phục vụ theo tình trạng tại tiệm."}
               </p>
 
-              <div className="mt-6 rounded-[1.4rem] border border-[#e1d8c7] bg-[#fffced] p-4 sm:p-5">
+              <div className="mt-6 rounded-[1.4rem] border border-[#184d39]/10 bg-[#EAF2D6]/45 p-4 sm:p-5">
                 <div className="flex items-center justify-between gap-4">
                   <div>
-                    <p className="text-[10px] font-extrabold uppercase tracking-[0.15em] text-[#7a8b70]">Chọn size</p>
-                    <p className="mt-1 text-xs leading-5 text-[#78847c]">Chạm vào size để xem đúng mức giá.</p>
+                    <p className="text-[10px] font-extrabold uppercase tracking-[0.15em] text-[#184d39]/55">Chọn size</p>
+                    <p className="mt-1 text-xs leading-5 text-[#184d39]/48">Chạm vào size để xem đúng mức giá.</p>
                   </div>
                   <strong className="shrink-0 text-lg font-extrabold tabular-nums text-[#184d39]">{money(activeVariant.price)}</strong>
                 </div>
@@ -380,11 +405,11 @@ function ProductDetail({
                         onClick={() => setSelected(index)}
                         className={`focus-ring rounded-2xl border px-3 py-3 text-left transition ${
                           active
-                            ? "border-[#184d39] bg-[#184d39] text-white shadow-[0_8px_20px_rgba(36,89,67,0.16)]"
-                            : "border-[#ddd5c5] bg-white text-[#3f5549] hover:border-[#91a087]"
+                            ? "border-[#184d39] bg-[#184d39] text-white shadow-[0_8px_20px_rgba(24,77,57,0.18)]"
+                            : "border-[#184d39]/14 bg-white text-[#184d39]/75 hover:border-[#184d39]/35"
                         }`}
                       >
-                        <span className={`block text-[10px] font-extrabold uppercase tracking-[0.12em] ${active ? "text-[#dfeadf]" : "text-[#879188]"}`}>
+                        <span className={`block text-[10px] font-extrabold uppercase tracking-[0.12em] ${active ? "text-white/75" : "text-[#184d39]/45"}`}>
                           Size
                         </span>
                         <span className="mt-0.5 block text-base font-extrabold">{variant.label}</span>
@@ -399,7 +424,7 @@ function ProductDetail({
                 {callHref ? (
                   <a
                     href={callHref}
-                    className="focus-ring inline-flex min-h-12 flex-1 items-center justify-center gap-2 rounded-full bg-[#184d39] px-5 text-sm font-bold text-white transition hover:bg-[#184d39]"
+                    className="focus-ring inline-flex min-h-12 flex-1 items-center justify-center gap-2 rounded-full bg-[#184d39] px-5 text-sm font-bold text-white transition hover:bg-[#123e2e]"
                   >
                     <Phone size={17} /> Gọi đặt món
                   </a>
@@ -407,7 +432,7 @@ function ProductDetail({
                 <button
                   type="button"
                   onClick={onClose}
-                  className="focus-ring inline-flex min-h-12 flex-1 items-center justify-center rounded-full border border-[#d4ccb9] bg-white px-5 text-sm font-bold text-[#184d39] transition hover:bg-[#fffced]"
+                  className="focus-ring inline-flex min-h-12 flex-1 items-center justify-center rounded-full border border-[#184d39]/14 bg-white px-5 text-sm font-bold text-[#184d39] transition hover:bg-[#fffced]"
                 >
                   Tiếp tục xem menu
                 </button>
@@ -509,17 +534,17 @@ function QuickMenu({
       onMouseDown={onClose}
     >
       <section
-        data-quick-menu-version="3.4.1"
+        data-quick-menu-version="4.0-avocado-blossom"
         role="dialog"
         aria-modal="true"
         aria-label="Menu nhanh Sweet Pea"
-        className="flex h-[96dvh] w-full overflow-hidden rounded-t-[2rem] border border-[#184d39]/14 bg-[#c7db95] shadow-[0_-30px_100px_rgba(10,39,29,0.28)] sm:h-[calc(100dvh-40px)] sm:max-h-[880px] sm:max-w-[1220px] sm:rounded-[2.25rem] lg:h-[min(860px,calc(100dvh-56px))]"
+        className="flex h-[96dvh] w-full overflow-hidden rounded-t-[2rem] border border-[#184d39]/14 bg-[#C7DB95] shadow-[0_-30px_100px_rgba(10,39,29,0.28)] sm:h-[calc(100dvh-40px)] sm:max-h-[880px] sm:max-w-[1220px] sm:rounded-[2.25rem] lg:h-[min(860px,calc(100dvh-56px))]"
         onMouseDown={(event: any) => event.stopPropagation()}
       >
         {/* Desktop editorial navigation */}
         <aside className="relative hidden w-[258px] shrink-0 flex-col overflow-hidden bg-[#fffced] text-[#184d39] lg:flex">
           <div className="pointer-events-none absolute -right-20 -top-16 h-52 w-52 rounded-full bg-[#c7db95]/65 blur-3xl" />
-          <div className="pointer-events-none absolute -bottom-16 -left-20 h-52 w-52 rounded-full bg-[#c7db95]/45 blur-3xl" />
+          <div className="pointer-events-none absolute -bottom-16 -left-20 h-52 w-52 rounded-full bg-[#F6CBD9]/35 blur-3xl" />
 
           <div className="relative border-b border-[#184d39]/10 px-6 pb-5 pt-6">
             <div className="flex items-center gap-3">
@@ -581,15 +606,15 @@ function QuickMenu({
         </aside>
 
         {/* Main content */}
-        <div className="flex min-w-0 flex-1 flex-col bg-[#c7db95] bg-[radial-gradient(circle_at_1px_1px,rgba(24,77,57,0.055)_1px,transparent_0)] bg-[size:22px_22px]">
+        <div className="flex min-w-0 flex-1 flex-col bg-[#C7DB95] bg-[radial-gradient(circle_at_1px_1px,rgba(24,77,57,0.055)_1px,transparent_0)] bg-[size:22px_22px]">
           <div className="mx-auto mt-2 h-1.5 w-12 shrink-0 rounded-full bg-[#184d39]/16 sm:hidden" />
 
           <header className="relative z-20 shrink-0 border-b border-[#184d39]/10 bg-[#c7db95]/96 px-4 pb-3 pt-3 backdrop-blur-xl sm:px-6 sm:py-5 lg:px-7">
             <div className="flex items-start gap-3 sm:items-center">
               <div className="min-w-0 flex-1">
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className="inline-flex items-center gap-1.5 rounded-full bg-[#c7db95]/55 px-2.5 py-1 text-[9px] font-extrabold uppercase tracking-[0.16em] text-[#184d39]">
-                    <Sparkles size={10} /> Sweet Pea Menu
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-[#fffced]/70 px-2.5 py-1 text-[9px] font-extrabold uppercase tracking-[0.16em] text-[#184d39]">
+                    <PetalMark className="h-3 w-3 text-[#C97B95]" /> Sweet Pea Menu
                   </span>
                   <span className="text-[10px] font-semibold text-[#184d39]/45">{visibleProducts} món</span>
                 </div>
@@ -690,7 +715,7 @@ function QuickMenu({
                               <div className="flex flex-wrap items-center gap-1.5">
                                 <h4 className="text-[13px] font-extrabold leading-5 text-[#184d39] sm:text-[14px]">{product.name}</h4>
                                 {product.isFeatured ? (
-                                  <span className="inline-flex items-center gap-1 rounded-full bg-[#c7db95] px-1.5 py-0.5 text-[8px] font-extrabold uppercase tracking-[0.06em] text-[#184d39]"><Sparkles size={8} /> Gợi ý</span>
+                                  <span className="inline-flex items-center gap-1 rounded-full bg-[#F6CBD9]/60 px-1.5 py-0.5 text-[8px] font-extrabold uppercase tracking-[0.06em] text-[#184d39]"><Sparkles size={8} /> Gợi ý</span>
                                 ) : null}
                               </div>
                               {product.description && product.description !== "Tiệm gợi ý" ? (
@@ -754,7 +779,6 @@ function GalleryMenu({
   title,
   description,
   phone,
-  openingText,
 }: {
   categories: MenuCategory[];
   items: MenuItem[];
@@ -762,7 +786,6 @@ function GalleryMenu({
   title: string;
   description: string;
   phone?: string;
-  openingText?: string;
 }) {
   const [active, setActive] = useState("all");
   const [quickOpen, setQuickOpen] = useState(false);
@@ -790,59 +813,152 @@ function GalleryMenu({
     <>
       <section id="menu" className="overflow-hidden bg-[#fffced] pb-20 pt-7 sm:pb-24 sm:pt-12 lg:pb-28 lg:pt-14">
         <div className="container-shell">
-          <div className="relative grid gap-5 lg:grid-cols-[minmax(0,1fr)_360px] lg:items-stretch lg:gap-8">
-            <div className="relative flex min-h-[270px] flex-col justify-center overflow-hidden rounded-[1.7rem] border border-[#e3dccd] bg-[#fffced] px-5 py-8 sm:min-h-[300px] sm:rounded-[2rem] sm:px-9 lg:min-h-[320px] lg:px-11">
-              <div className="pointer-events-none absolute -left-20 -top-24 h-56 w-56 rounded-full bg-[#c7db95]/70 blur-3xl" />
-              <div className="pointer-events-none absolute -bottom-16 right-8 h-40 w-40 rounded-full bg-[#f1dfc6]/55 blur-3xl" />
-              <div className="relative">
-                <p className="inline-flex items-center gap-2 rounded-full bg-[#c7db95] px-3.5 py-2 text-[10px] font-extrabold uppercase tracking-[0.18em] text-[#687b5c] sm:text-xs">
-                  <Leaf size={14} /> {eyebrow}
+          <div
+            data-menu-hero-version="6.0-avocado-blossom"
+            className="relative overflow-hidden rounded-[1.8rem] border border-[#184d39]/9 bg-gradient-to-br from-[#FFFCED] to-[#EAF2D6] shadow-[0_18px_55px_rgba(24,77,57,0.07)] sm:rounded-[2.2rem]"
+          >
+            {/* soft ambient decoration — one hue at a time, never three mixed together */}
+            <div className="pointer-events-none absolute -left-20 -top-24 h-64 w-64 rounded-full bg-[#C7DB95]/55 blur-3xl" />
+            <div className="pointer-events-none absolute -right-20 -top-16 h-56 w-56 rounded-full bg-[#F6CBD9]/45 blur-3xl" />
+
+            <FloatingPetals petals={HERO_PETALS} className="hidden sm:block" />
+
+            {/* cute flower */}
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute right-5 top-5 hidden h-14 w-14 rotate-12 opacity-60 sm:block"
+            >
+              <span className="absolute left-[20px] top-0 h-5 w-5 rounded-full bg-[#F6CBD9]" />
+              <span className="absolute right-0 top-[18px] h-5 w-5 rounded-full bg-[#F6CBD9]" />
+              <span className="absolute bottom-0 left-[22px] h-5 w-5 rounded-full bg-[#F6CBD9]" />
+              <span className="absolute left-0 top-[20px] h-5 w-5 rounded-full bg-[#F6CBD9]" />
+              <span className="absolute left-[21px] top-[20px] h-4 w-4 rounded-full bg-[#FFFCED]" />
+            </div>
+
+            <div className="relative grid gap-6 px-5 py-7 sm:px-8 sm:py-9 lg:grid-cols-[minmax(0,1.12fr)_minmax(310px,.88fr)] lg:items-center lg:gap-10 lg:px-10 lg:py-10">
+
+              {/* LEFT CONTENT */}
+              <div className="max-w-3xl">
+                <p className="inline-flex items-center gap-2 rounded-full border border-[#184d39]/8 bg-[#C7DB95]/60 px-3.5 py-2 text-[10px] font-extrabold uppercase tracking-[0.18em] text-[#184d39] sm:text-[11px]">
+                  <Leaf size={13} />
+                  {eyebrow}
                 </p>
-                <h1 className="font-display mt-4 max-w-3xl text-[clamp(2.55rem,7vw,5.3rem)] font-bold leading-[0.98] tracking-[-0.045em] text-[#184d39] sm:mt-5">{title}</h1>
-                <p className="mt-4 max-w-2xl text-sm leading-6 text-[#68766e] sm:mt-5 sm:text-base sm:leading-7">{description}</p>
-                <div className="mt-6 flex flex-col gap-2.5 sm:mt-7 sm:flex-row sm:gap-3">
+
+                <h1 className="font-display mt-4 max-w-3xl text-[clamp(2.7rem,6vw,5rem)] font-bold leading-[0.96] tracking-[-0.045em] text-[#184d39]">
+                  {title}
+                </h1>
+
+                <p className="mt-4 max-w-2xl text-sm leading-6 text-[#184d39]/58 sm:text-base sm:leading-7">
+                  {description}
+                </p>
+
+                <div className="mt-6 flex flex-col gap-2.5 sm:flex-row">
                   <button
                     type="button"
                     onClick={() => setQuickOpen(true)}
-                    className="focus-ring inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#184d39] px-5 font-semibold text-white shadow-[0_10px_25px_rgba(36,89,67,0.18)] transition hover:bg-[#184d39] sm:px-6"
+                    className="focus-ring inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#184d39] px-5 text-sm font-bold text-[#fffced] shadow-[0_12px_26px_rgba(24,77,57,0.16)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#123e2e] hover:shadow-[0_16px_34px_rgba(24,77,57,0.20)] sm:px-6"
                   >
-                    <List size={18} /> Xem menu nhanh
+                    <List size={17} />
+                    {"Xem menu nhanh"}
                   </button>
-                  {callHref && (
+
+                  {callHref ? (
                     <a
                       href={callHref}
-                      className="focus-ring inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-[#cfc6b3] bg-white px-5 font-semibold text-[#184d39] transition hover:border-[#91a087] hover:bg-[#fffced] sm:px-6"
+                      className="focus-ring inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-[#184d39]/14 bg-[#fffced]/84 px-5 text-sm font-bold text-[#184d39] transition duration-300 hover:-translate-y-0.5 hover:border-[#184d39]/25 hover:bg-white sm:px-6"
                     >
-                      <Phone size={17} /> Gọi đặt món
+                      <Phone size={16} />
+                      {"G\u1ecdi \u0111\u1eb7t m\u00f3n"}
                     </a>
-                  )}
+                  ) : null}
+                </div>
+
+                <div className="mt-5 flex flex-wrap gap-2">
+                  <span className="inline-flex items-center gap-1.5 rounded-full border border-[#184d39]/8 bg-white/48 px-3 py-1.5 text-[9px] font-bold text-[#184d39]/58">
+                    <Sparkles size={11} className="text-[#C97B95]" />
+                    {"Menu \u0111\u01b0\u1ee3c c\u1eadp nh\u1eadt th\u01b0\u1eddng xuy\u00ean"}
+                  </span>
+
+                  <span className="inline-flex items-center gap-1.5 rounded-full border border-[#F6CBD9]/50 bg-[#F6CBD9]/25 px-3 py-1.5 text-[9px] font-bold text-[#C97B95]">
+                    <Leaf size={11} />
+                    {"Sweet Pea menu"}
+                  </span>
+                </div>
+              </div>
+
+
+              {/* RIGHT QUICK INFO */}
+              <div className="relative">
+                <div className="rounded-[1.45rem] border border-white/70 bg-white/58 p-3 shadow-[0_14px_35px_rgba(24,77,57,0.07)] backdrop-blur-md sm:p-4">
+
+                  <div className="grid gap-2.5 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
+
+                    {/* OPEN HOURS */}
+                    <div className="group relative overflow-hidden rounded-[1.2rem] border border-[#184d39]/8 bg-[#fffced]/88 p-4 transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_10px_24px_rgba(24,77,57,0.08)]">
+                      <div className="pointer-events-none absolute -right-4 -top-4 h-14 w-14 rounded-full bg-[#F7DE94]/55 blur-xl" />
+
+                      <span className="relative grid h-9 w-9 place-items-center rounded-xl bg-[#c7db95] text-[#184d39]">
+                        <Clock3 size={16} />
+                      </span>
+
+                      <p className="relative mt-3 text-[9px] font-extrabold uppercase tracking-[0.14em] text-[#184d39]/43">
+                        {"GI\u1edc HO\u1ea0T \u0110\u1ed8NG"}
+                      </p>
+
+                      <p className="relative mt-1 text-xl font-extrabold tracking-[-0.03em] text-[#184d39]">
+                        07:30 — 22:00
+                      </p>
+
+                      <p className="relative mt-1 text-[10px] font-medium text-[#184d39]/45">
+                        {"M\u1edf c\u1eeda m\u1ed7i ng\u00e0y"}
+                      </p>
+                    </div>
+
+
+                    {/* QUICK MENU */}
+                    <button
+                      type="button"
+                      onClick={() => setQuickOpen(true)}
+                      className="focus-ring group relative overflow-hidden rounded-[1.2rem] border border-[#184d39]/8 bg-[#fffced]/88 p-4 text-left transition duration-300 hover:-translate-y-0.5 hover:border-[#F6CBD9]/55 hover:shadow-[0_10px_24px_rgba(24,77,57,0.08)]"
+                    >
+                      <div className="pointer-events-none absolute -right-4 -top-4 h-14 w-14 rounded-full bg-[#F6CBD9]/55 blur-xl" />
+
+                      <span className="relative grid h-9 w-9 place-items-center rounded-xl bg-[#F6CBD9]/70 text-[#184d39]">
+                        <List size={16} />
+                      </span>
+
+                      <p className="relative mt-3 text-[9px] font-extrabold uppercase tracking-[0.14em] text-[#184d39]/43">
+                        {"MENU NHANH"}
+                      </p>
+
+                      <p className="relative mt-1 text-base font-extrabold text-[#184d39]">
+                        {"Gi\u00e1 + size \u0111\u1ea7y \u0111\u1ee7"}
+                      </p>
+
+                      <span className="relative mt-2 inline-flex items-center gap-1 text-[10px] font-extrabold text-[#C97B95]">
+                        {"M\u1edf b\u1ea3ng gi\u00e1"}
+                        <ChevronRight
+                          size={12}
+                          className="transition-transform group-hover:translate-x-0.5"
+                        />
+                      </span>
+                    </button>
+                  </div>
+
+
+                  
+                </div>
+
+                <div
+                  aria-hidden="true"
+                  className="absolute -bottom-3 -right-3 hidden rounded-full border border-[#F6CBD9]/60 bg-[#fffced] px-3 py-1.5 text-[9px] font-bold text-[#C97B95] shadow-sm sm:block"
+                >
+                  {"fresh \u00b7 cute \u00b7 sweet"}
                 </div>
               </div>
             </div>
-
-            <aside className="relative overflow-hidden rounded-[1.7rem] border border-[#d9d1bf] bg-[#fffced] p-5 shadow-[0_16px_45px_rgba(56,72,59,0.07)] sm:rounded-[2rem] sm:p-7">
-              <div className="pointer-events-none absolute -bottom-10 -right-10 h-36 w-36 rounded-full border border-[#c8cba8]" />
-              <div className="pointer-events-none absolute -bottom-5 -right-5 h-24 w-24 rounded-full border border-[#c8cba8]" />
-              <div className="relative space-y-4 sm:space-y-5">
-                <div className="flex items-start gap-3">
-                  <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-white text-[#184d39] shadow-sm"><Clock3 size={18} /></span>
-                  <div>
-                    <p className="text-[10px] font-extrabold uppercase tracking-[0.14em] text-[#6f8067] sm:text-[11px]">Thời gian phục vụ</p>
-                    <p className="mt-1 text-sm font-bold leading-6 text-[#184d39] sm:text-base">{openingText || "Nhận đặt bánh và thức uống mỗi ngày"}</p>
-                  </div>
-                </div>
-                <div className="border-t border-dashed border-[#cbc2ad] pt-4 sm:pt-5">
-                  <p className="text-sm font-semibold text-[#3d5549]">Giá hiển thị theo menu tại tiệm.</p>
-                  <p className="mt-2 text-sm leading-6 text-[#748078]">Mở <strong className="font-semibold text-[#184d39]">Menu nhanh</strong> để xem bảng giá đầy đủ. Món nhiều size sẽ được gom chung.</p>
-                </div>
-                <div className="inline-flex items-center gap-2 rounded-full bg-[#c7db95] px-3 py-2 text-xs font-bold text-[#55704e]">
-                  <Sparkles size={14} /> Ảnh được cập nhật từ Admin
-                </div>
-              </div>
-            </aside>
           </div>
-
-          <div className="sticky top-[68px] z-30 -mx-3 mt-5 rounded-[1.35rem] border border-[#e2d9c8] bg-[#fffced]/94 p-2 shadow-[0_10px_35px_rgba(51,70,58,0.06)] backdrop-blur-xl sm:mx-0 sm:mt-8 sm:rounded-[1.6rem] sm:p-2.5">
+          <div className="sticky top-[68px] z-30 -mx-3 mt-5 rounded-[1.35rem] border border-[#184d39]/9 bg-[#fffced]/92 p-2 shadow-[0_10px_35px_rgba(51,70,58,0.06)] backdrop-blur-xl sm:mx-0 sm:mt-8 sm:rounded-[1.6rem] sm:p-2.5">
             <div className="flex gap-2 overflow-x-auto pb-0.5" role="tablist" aria-label="Lọc sản phẩm theo danh mục">
               {[{ id: "all", name: "Tất cả" }, ...categories].map((category) => {
                 const selected = category.id === active;
@@ -856,7 +972,7 @@ function GalleryMenu({
                     className={`focus-ring inline-flex min-h-10 shrink-0 items-center gap-2 rounded-full border px-3.5 text-xs font-semibold transition sm:min-h-11 sm:px-5 sm:text-sm ${
                       selected
                         ? "border-[#184d39] bg-[#184d39] text-white"
-                        : "border-[#ded6c6] bg-[#fffced] text-[#53655b] hover:border-[#8fa087]"
+                        : "border-[#184d39]/14 bg-[#fffced] text-[#184d39]/65 hover:border-[#184d39]/35"
                     }`}
                   >
                     {selected ? <Check size={14} /> : <Leaf size={13} />}
@@ -869,14 +985,14 @@ function GalleryMenu({
 
           <div className="mt-8 flex flex-col justify-between gap-3 sm:mt-10 sm:flex-row sm:items-end">
             <div>
-              <p className="inline-flex items-center gap-2 text-[10px] font-extrabold uppercase tracking-[0.18em] text-[#7b8e70] sm:text-xs"><Grid2X2 size={15} /> Thực đơn bằng hình ảnh</p>
+              <p className="inline-flex items-center gap-2 text-[10px] font-extrabold uppercase tracking-[0.18em] text-[#184d39]/55 sm:text-xs"><Grid2X2 size={15} /> Thực đơn bằng hình ảnh</p>
               <h2 className="font-display mt-2 text-3xl font-bold tracking-[-0.03em] text-[#184d39] sm:text-4xl">Khám phá món tại Sweet Pea</h2>
-              <p className="mt-2 max-w-3xl text-sm leading-6 text-[#728078]">Món có ảnh được ưu tiên hiển thị. Với món có nhiều size, bấm <strong className="font-semibold text-[#184d39]">Xem chi tiết</strong> để chọn size và xem đúng giá.</p>
+              <p className="mt-2 max-w-3xl text-sm leading-6 text-[#184d39]/58">Món có ảnh được ưu tiên hiển thị. Với món có nhiều size, bấm <strong className="font-semibold text-[#184d39]">Xem chi tiết</strong> để chọn size và xem đúng giá.</p>
             </div>
             <button
               type="button"
               onClick={() => setQuickOpen(true)}
-              className="focus-ring inline-flex w-fit items-center gap-2 rounded-full border border-[#d1c8b5] bg-[#fffced] px-4 py-2.5 text-sm font-bold text-[#184d39] transition hover:bg-[#fffced]"
+              className="focus-ring inline-flex w-fit items-center gap-2 rounded-full border border-[#184d39]/14 bg-[#fffced] px-4 py-2.5 text-sm font-bold text-[#184d39] transition hover:bg-[#EAF2D6]"
             >
               <List size={16} /> Xem bảng giá đầy đủ
             </button>
@@ -892,18 +1008,18 @@ function GalleryMenu({
                   return (
                     <article
                       key={product.key}
-                      className="group overflow-hidden rounded-[1.5rem] border border-[#ded6c6] bg-white shadow-[0_12px_36px_rgba(46,75,61,0.07)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_18px_50px_rgba(46,75,61,0.12)] sm:rounded-[1.65rem]"
+                      className="group overflow-hidden rounded-[1.5rem] border border-[#184d39]/12 bg-white shadow-[0_12px_36px_rgba(24,77,57,0.07)] transition duration-300 hover:-translate-y-1 hover:border-[#C97B95]/35 hover:shadow-[0_18px_50px_rgba(24,77,57,0.12)] sm:rounded-[1.65rem]"
                     >
-                      <div className="relative aspect-[16/11] overflow-hidden bg-[#eef0df] sm:aspect-[4/3]">
+                      <div className="relative aspect-[16/11] overflow-hidden bg-[#EAF2D6] sm:aspect-[4/3]">
                         <ProductGallery product={product} />
                         <div className="absolute inset-x-0 top-0 flex items-start justify-between gap-3 p-3">
                           {product.isFeatured ? (
-                            <span className="inline-flex items-center gap-1.5 rounded-full bg-[#6f8b4c] px-2.5 py-1.5 text-[9px] font-extrabold uppercase tracking-[0.08em] text-white shadow-sm sm:text-[10px]">
+                            <span className="inline-flex items-center gap-1.5 rounded-full bg-[#184d39] px-2.5 py-1.5 text-[9px] font-extrabold uppercase tracking-[0.08em] text-white shadow-sm sm:text-[10px]">
                               <Sparkles size={11} /> Gợi ý
                             </span>
                           ) : <span />}
                           <div className="flex flex-col items-end gap-1.5">
-                            <span className="rounded-full bg-[#fffced]/92 px-2.5 py-1.5 text-[9px] font-bold text-[#4d6658] shadow-sm backdrop-blur sm:text-[10px]">{category?.name || "Sweet Pea"}</span>
+                            <span className="rounded-full bg-[#fffced]/92 px-2.5 py-1.5 text-[9px] font-bold text-[#184d39] shadow-sm backdrop-blur sm:text-[10px]">{category?.name || "Sweet Pea"}</span>
                             {hasSizes && (
                               <span className="rounded-full bg-[#184d39] px-2.5 py-1 text-[9px] font-extrabold uppercase tracking-[0.06em] text-white shadow-sm">
                                 {product.variants.length} size
@@ -918,9 +1034,9 @@ function GalleryMenu({
                           <h3 className="font-display min-w-0 text-[1.25rem] font-bold leading-[1.12] text-[#184d39] sm:text-[1.35rem]">{product.name}</h3>
                           <strong className="shrink-0 text-xs font-extrabold tabular-nums text-[#184d39] sm:text-sm">{productPrice(product)}</strong>
                         </div>
-                        <p className="mt-2 line-clamp-2 min-h-10 text-sm leading-5 text-[#748078]">{product.description || "Có tại Sweet Pea."}</p>
-                        <div className="mt-4 flex min-h-10 items-center justify-between gap-3 border-t border-[#eee7db] pt-3">
-                          <span className="min-w-0 truncate text-[9px] font-bold uppercase tracking-[0.1em] text-[#8b958f] sm:text-[10px]">
+                        <p className="mt-2 line-clamp-2 min-h-10 text-sm leading-5 text-[#184d39]/55">{product.description || "Có tại Sweet Pea."}</p>
+                        <div className="mt-4 flex min-h-10 items-center justify-between gap-3 border-t border-[#184d39]/10 pt-3">
+                          <span className="min-w-0 truncate text-[9px] font-bold uppercase tracking-[0.1em] text-[#184d39]/45 sm:text-[10px]">
                             {hasSizes ? `${product.variants.length} lựa chọn kích thước` : "Đang có tại tiệm"}
                           </span>
 
@@ -928,7 +1044,7 @@ function GalleryMenu({
                             <button
                               type="button"
                               onClick={() => setDetailProduct(product)}
-                              className="focus-ring inline-flex shrink-0 items-center gap-1.5 rounded-full bg-[#184d39] px-3 py-2 text-xs font-bold text-white transition hover:bg-[#184d39]"
+                              className="focus-ring inline-flex shrink-0 items-center gap-1.5 rounded-full bg-[#184d39] px-3 py-2 text-xs font-bold text-white transition hover:bg-[#123e2e]"
                             >
                               <Eye size={14} /> Xem chi tiết <ChevronRight size={13} />
                             </button>
@@ -945,7 +1061,7 @@ function GalleryMenu({
                   <button
                     type="button"
                     onClick={() => setShowAllImages(true)}
-                    className="focus-ring inline-flex min-h-12 items-center gap-2 rounded-full border border-[#d4ccb9] bg-white px-6 font-semibold text-[#184d39] transition hover:bg-[#fffced]"
+                    className="focus-ring inline-flex min-h-12 items-center gap-2 rounded-full border border-[#184d39]/14 bg-white px-6 font-semibold text-[#184d39] transition hover:bg-[#fffced]"
                   >
                     Xem thêm {imageProducts.length - visibleImageProducts.length} món <ChevronDown size={17} />
                   </button>
@@ -953,10 +1069,10 @@ function GalleryMenu({
               )}
             </>
           ) : (
-            <div className="mt-6 rounded-[2rem] border border-dashed border-[#cbd2b3] bg-[#fffced] px-5 py-14 text-center sm:px-8">
-              <span className="mx-auto grid h-12 w-12 place-items-center rounded-full bg-[#c7db95] text-[#456753]"><ImageIcon size={21} /></span>
+            <div className="mt-6 rounded-[2rem] border border-dashed border-[#184d39]/20 bg-[#fffced] px-5 py-14 text-center sm:px-8">
+              <span className="mx-auto grid h-12 w-12 place-items-center rounded-full bg-[#C7DB95] text-[#184d39]"><ImageIcon size={21} /></span>
               <h3 className="font-display mt-4 text-2xl font-bold text-[#184d39]">Danh mục này chưa có ảnh món</h3>
-              <p className="mx-auto mt-2 max-w-xl text-sm leading-6 text-[#748078]">Bạn có thể thêm ảnh trong trang Quản trị. Khách vẫn xem được đầy đủ tên món và giá bằng Menu nhanh.</p>
+              <p className="mx-auto mt-2 max-w-xl text-sm leading-6 text-[#184d39]/55">Bạn có thể thêm ảnh trong trang Quản trị. Khách vẫn xem được đầy đủ tên món và giá bằng Menu nhanh.</p>
               <button type="button" onClick={() => setQuickOpen(true)} className="focus-ring mt-5 inline-flex min-h-11 items-center gap-2 rounded-full bg-[#184d39] px-5 text-sm font-semibold text-white">
                 <List size={16} /> Xem menu nhanh
               </button>
@@ -969,7 +1085,7 @@ function GalleryMenu({
         <button
           type="button"
           onClick={() => setQuickOpen(true)}
-          className="focus-ring fixed bottom-4 left-1/2 z-40 inline-flex min-h-12 -translate-x-1/2 items-center gap-2 rounded-full bg-[#184d39] px-5 text-sm font-bold text-white shadow-[0_14px_35px_rgba(23,58,45,0.28)] sm:hidden"
+          className="focus-ring fixed bottom-4 left-1/2 z-40 inline-flex min-h-12 -translate-x-1/2 items-center gap-2 rounded-full bg-[#184d39] px-5 text-sm font-bold text-white shadow-[0_14px_35px_rgba(24,77,57,0.28)] sm:hidden"
         >
           <List size={17} /> Xem menu nhanh
         </button>
@@ -1025,7 +1141,7 @@ function CardMenu({
                 className={`focus-ring flex min-h-11 shrink-0 items-center gap-2 rounded-full border px-5 text-sm font-semibold transition ${
                   selected
                     ? "border-[#184d39] bg-[#184d39] text-white"
-                    : "border-[#d7d1bf] bg-[#fffced] text-[#506359] hover:border-[#8da083]"
+                    : "border-[#184d39]/14 bg-[#fffced] text-[#184d39]/60 hover:border-[#184d39]/35"
                 }`}
               >
                 {selected && <Check size={15} />}
@@ -1039,29 +1155,29 @@ function CardMenu({
       {visibleProducts.length > 0 ? (
         <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {visibleProducts.map((product) => (
-            <article key={product.key} className="group overflow-hidden rounded-[2rem] border border-[#ddd5c5] bg-white shadow-[0_12px_40px_rgba(46,75,61,0.07)]">
+            <article key={product.key} className="group overflow-hidden rounded-[2rem] border border-[#184d39]/12 bg-white shadow-[0_12px_40px_rgba(24,77,57,0.07)]">
               <div className="aspect-[4/3] overflow-hidden"><ProductGallery product={product} /></div>
               <div className="p-5 sm:p-6">
                 <div className="flex items-start justify-between gap-4">
                   <h3 className="font-display text-2xl font-bold leading-tight text-[#184d39]">{product.name}</h3>
-                  <span className="shrink-0 rounded-full bg-[#c7db95] px-3 py-1.5 text-sm font-bold text-[#184d39]">{productPrice(product)}</span>
+                  <span className="shrink-0 rounded-full bg-[#C7DB95] px-3 py-1.5 text-sm font-bold text-[#184d39]">{productPrice(product)}</span>
                 </div>
-                <p className="mt-3 line-clamp-2 min-h-12 text-sm leading-6 text-[#6a766f]">{product.description || "Có tại Sweet Pea."}</p>
-                <div className="mt-5 flex items-center justify-between border-t border-[#ece6d9] pt-4">
-                  <span className="text-xs font-semibold uppercase tracking-[0.12em] text-[#829078]">{product.variants.length > 1 ? `${product.variants.length} size` : "Đang có tại tiệm"}</span>
-                  {product.isFeatured && <span className="inline-flex items-center gap-1 text-xs font-bold text-[#8d6a3d]"><CakeSlice size={14} /> Tiệm gợi ý</span>}
+                <p className="mt-3 line-clamp-2 min-h-12 text-sm leading-6 text-[#184d39]/55">{product.description || "Có tại Sweet Pea."}</p>
+                <div className="mt-5 flex items-center justify-between border-t border-[#184d39]/10 pt-4">
+                  <span className="text-xs font-semibold uppercase tracking-[0.12em] text-[#184d39]/48">{product.variants.length > 1 ? `${product.variants.length} size` : "Đang có tại tiệm"}</span>
+                  {product.isFeatured && <span className="inline-flex items-center gap-1 text-xs font-bold text-[#C97B95]"><CakeSlice size={14} /> Tiệm gợi ý</span>}
                 </div>
               </div>
             </article>
           ))}
         </div>
       ) : (
-        <div className="mt-8 rounded-[2rem] border border-dashed border-[#cbd2b3] bg-[#fffced] px-6 py-14 text-center text-[#657368]">Danh mục này đang được tiệm chuẩn bị thêm món mới.</div>
+        <div className="mt-8 rounded-[2rem] border border-dashed border-[#184d39]/20 bg-[#fffced] px-6 py-14 text-center text-[#184d39]/60">Danh mục này đang được tiệm chuẩn bị thêm món mới.</div>
       )}
 
       {showViewAll && (
         <div className="mt-9 text-center">
-          <Link href="/menu" className="focus-ring inline-flex min-h-12 items-center justify-center rounded-full bg-[#184d39] px-7 font-semibold text-white transition hover:bg-[#184d39]">Xem toàn bộ menu</Link>
+          <Link href="/menu" className="focus-ring inline-flex min-h-12 items-center justify-center rounded-full bg-[#184d39] px-7 font-semibold text-white transition hover:bg-[#123e2e]">Xem toàn bộ menu</Link>
         </div>
       )}
     </>
@@ -1078,7 +1194,6 @@ export function MenuCatalog({
   showViewAll = false,
   variant = "cards",
   phone,
-  openingText,
 }: MenuCatalogProps) {
   const [active, setActive] = useState("all");
 
@@ -1091,7 +1206,7 @@ export function MenuCatalog({
         title={title}
         description={description}
         phone={phone}
-        openingText={openingText}
+
       />
     );
   }
@@ -1101,10 +1216,10 @@ export function MenuCatalog({
       <div className="container-shell">
         <div className="flex flex-col justify-between gap-7 lg:flex-row lg:items-end">
           <div>
-            <p className="text-sm font-bold uppercase tracking-[0.18em] text-[#77906d]">{eyebrow}</p>
+            <p className="text-sm font-bold uppercase tracking-[0.18em] text-[#184d39]/70">{eyebrow}</p>
             <h2 className="font-display mt-3 max-w-3xl text-4xl font-bold leading-[1.04] text-[#184d39] sm:text-5xl lg:text-6xl">{title}</h2>
           </div>
-          <p className="max-w-md text-base leading-7 text-[#68766e]">{description}</p>
+          <p className="max-w-md text-base leading-7 text-[#184d39]/58">{description}</p>
         </div>
 
         <CardMenu categories={categories} items={items} active={active} setActive={setActive} showFilters={showFilters} showViewAll={showViewAll} />

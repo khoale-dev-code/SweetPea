@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowRight, CalendarDays, Film, Images, Sparkles } from "lucide-react";
 import { NewsMediaGallery } from "@/components/news-media-gallery";
 import { PageTransition } from "@/components/page-transition";
+import { FloatingPetals, type Petal } from "@/components/floating-petals";
 import { getNewsPosts } from "@/lib/store";
 import type { NewsMedia, NewsPost } from "@/lib/types";
 
@@ -13,6 +14,29 @@ type NewsDetailProps = { params: Promise<{ id: string }> };
 export const revalidate = 60;
 
 const headingFont = { fontFamily: 'Cambria, "Times New Roman", serif' };
+
+const HERO_PETALS: Petal[] = [
+  { top: "12%", right: "10%", size: 24, color: "#F6CBD9", centerColor: "#FFFCED", delay: 0, duration: 7.2, rotate: 8, opacity: 0.7 },
+  { bottom: "10%", left: "6%", size: 16, color: "#F7DE94", centerColor: "#184d39", delay: 1.1, duration: 8, rotate: -8, opacity: 0.45 },
+];
+
+function PetalMark({
+  className = "h-4 w-4",
+  centerColor = "#F7DE94",
+}: {
+  className?: string;
+  centerColor?: string;
+}) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} aria-hidden="true">
+      <circle cx="12" cy="6.5" r="4.4" fill="currentColor" />
+      <circle cx="12" cy="17.5" r="4.4" fill="currentColor" />
+      <circle cx="6.5" cy="12" r="4.4" fill="currentColor" />
+      <circle cx="17.5" cy="12" r="4.4" fill="currentColor" />
+      <circle cx="12" cy="12" r="3.1" fill={centerColor} />
+    </svg>
+  );
+}
 
 function dateText(value: string) {
   return new Intl.DateTimeFormat("vi-VN", { day: "2-digit", month: "long", year: "numeric" }).format(new Date(value));
@@ -34,9 +58,9 @@ function postMedia(post: NewsPost) {
 function RelatedPreview({ post }: { post: NewsPost }) {
   const media = postMedia(post);
   const cover = post.image_url ? media.find((item) => item.url === post.image_url) || inferMedia(post.image_url) : media[0];
-  if (!cover) return <div className="soft-grid grid h-full place-items-center bg-[#c7db95]/38 p-5"><Image src="/sweet-pea-logo.png" alt="Sweet Pea" width={120} height={120} className="w-16 rounded-full opacity-90" /></div>;
+  if (!cover) return <div className="soft-grid grid h-full place-items-center bg-[#C7DB95]/32 p-5"><Image src="/sweet-pea-logo.png" alt="Sweet Pea" width={120} height={120} className="w-16 rounded-full opacity-90" /></div>;
   if (cover.type === "video") return <div className="relative h-full w-full"><video src={cover.url} muted playsInline preload="metadata" className="h-full w-full object-cover" /><span className="absolute inset-0 grid place-items-center bg-[#184d39]/14 text-white"><Film size={20} /></span></div>;
-  return <img src={cover.url} alt={post.title} loading="lazy" className="h-full w-full object-cover" />;
+  return <img src={cover.url} alt={post.title} loading="lazy" className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]" />;
 }
 
 export async function generateMetadata({ params }: NewsDetailProps): Promise<Metadata> {
@@ -59,13 +83,16 @@ export default async function NewsDetailPage({ params }: NewsDetailProps) {
     <PageTransition>
       <article className="bg-[#fffced]">
         <header className="relative overflow-hidden border-b border-[#184d39]/10 bg-[#fffced]">
-          <div className="pointer-events-none absolute -left-20 top-10 h-64 w-64 rounded-full bg-[#c7db95]/45 blur-3xl" />
+          <div className="pointer-events-none absolute -left-20 top-10 h-64 w-64 rounded-full bg-[#C7DB95]/45 blur-3xl" />
+          <div className="pointer-events-none absolute -right-16 top-0 h-56 w-56 rounded-full bg-[#F6CBD9]/28 blur-3xl" />
+          <FloatingPetals petals={HERO_PETALS} className="hidden sm:block" />
+
           <div className="container-shell relative py-10 sm:py-14 lg:py-16">
-            <Link href="/news" className="focus-ring inline-flex items-center gap-2 rounded-full border border-[#184d39]/12 bg-white/65 px-4 py-2.5 text-sm font-bold text-[#184d39]"><ArrowLeft size={16} /> Quay lại Bản tin</Link>
+            <Link href="/news" className="focus-ring inline-flex items-center gap-2 rounded-full border border-[#184d39]/12 bg-white/70 px-4 py-2.5 text-sm font-bold text-[#184d39] transition hover:bg-white"><ArrowLeft size={16} /> Quay lại Bản tin</Link>
             <div className="mt-8 max-w-4xl">
               <div className="flex flex-wrap items-center gap-2 text-[11px] font-extrabold uppercase tracking-[0.14em] text-[#184d39]/50">
                 <span className="inline-flex items-center gap-1.5"><CalendarDays size={14} /> {dateText(post.published_at)}</span>
-                {post.is_featured ? <span className="inline-flex items-center gap-1.5 rounded-full bg-[#c7db95]/55 px-2.5 py-1 text-[#184d39]"><Sparkles size={12} /> Nổi bật</span> : null}
+                {post.is_featured ? <span className="inline-flex items-center gap-1.5 rounded-full bg-[#F6CBD9]/55 px-2.5 py-1 text-[#184d39]"><Sparkles size={12} /> Nổi bật</span> : null}
                 {media.length > 1 ? <span className="inline-flex items-center gap-1.5 rounded-full border border-[#184d39]/10 bg-white px-2.5 py-1 text-[#184d39]/60"><Images size={12} /> {media.length} media</span> : null}
                 {videoCount ? <span className="inline-flex items-center gap-1.5 rounded-full bg-[#184d39] px-2.5 py-1 text-white"><Film size={12} /> {videoCount} video</span> : null}
               </div>
@@ -80,7 +107,7 @@ export default async function NewsDetailPage({ params }: NewsDetailProps) {
             {media.length ? (
               <NewsMediaGallery title={post.title} media={media} autoplaySeconds={post.media_autoplay_seconds || 0} />
             ) : (
-              <div className="soft-grid grid min-h-[22rem] place-items-center rounded-[1.8rem] border border-[#184d39]/10 bg-[#c7db95]/32">
+              <div className="soft-grid grid min-h-[22rem] place-items-center rounded-[1.8rem] border border-[#184d39]/10 bg-[#C7DB95]/28">
                 <Image src="/sweet-pea-logo.png" alt="Sweet Pea" width={240} height={240} className="w-36 rounded-full sm:w-48" />
               </div>
             )}
@@ -91,22 +118,22 @@ export default async function NewsDetailPage({ params }: NewsDetailProps) {
           </main>
 
           <aside className="grid gap-4 lg:sticky lg:top-24">
-            <div className="rounded-[1.6rem] border border-[#184d39]/10 bg-[#c7db95]/28 p-5">
-              <p className="text-[10px] font-extrabold uppercase tracking-[0.16em] text-[#184d39]/52">Đọc tiếp</p>
+            <div className="overflow-hidden rounded-[1.6rem] border border-[#184d39]/10 bg-[#C7DB95]/26 p-5">
+              <p className="inline-flex items-center gap-2 text-[10px] font-extrabold uppercase tracking-[0.16em] text-[#184d39]/55"><PetalMark className="h-3.5 w-3.5 text-[#C97B95]" /> Đọc tiếp</p>
               <h2 style={headingFont} className="mt-2 text-2xl font-bold text-[#184d39]">Chuyện khác từ tiệm</h2>
             </div>
             {related.map((item) => {
               const itemMedia = postMedia(item);
               return (
-                <Link key={item.id} href={`/news/${item.id}`} className="group overflow-hidden rounded-[1.5rem] border border-[#184d39]/10 bg-white/48">
-                  <div className="relative aspect-[16/9] overflow-hidden border-b border-[#184d39]/10 bg-[#c7db95]/20">
+                <Link key={item.id} href={`/news/${item.id}`} className="group overflow-hidden rounded-[1.5rem] border border-[#184d39]/10 bg-white/55 transition duration-300 hover:-translate-y-0.5 hover:border-[#C97B95]/30 hover:shadow-[0_14px_32px_rgba(24,77,57,0.09)]">
+                  <div className="relative aspect-[16/9] overflow-hidden border-b border-[#184d39]/10 bg-[#C7DB95]/20">
                     <RelatedPreview post={item} />
                     {itemMedia.length > 1 ? <span className="absolute bottom-2 right-2 inline-flex items-center gap-1 rounded-full bg-[#184d39]/88 px-2 py-1 text-[9px] font-bold text-white"><Images size={10} /> {itemMedia.length}</span> : null}
                   </div>
                   <div className="p-4">
                     <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-[#184d39]/45">{dateText(item.published_at)}</p>
-                    <h3 className="mt-2 line-clamp-2 text-sm font-bold leading-5 text-[#184d39]">{item.title}</h3>
-                    <span className="mt-3 inline-flex items-center gap-1 text-xs font-extrabold text-[#184d39]">Đọc bài <ArrowRight size={13} /></span>
+                    <h3 className="mt-2 line-clamp-2 text-sm font-bold leading-5 text-[#184d39] transition group-hover:text-[#C97B95]">{item.title}</h3>
+                    <span className="mt-3 inline-flex items-center gap-1 text-xs font-extrabold text-[#184d39]">Đọc bài <ArrowRight size={13} className="transition group-hover:translate-x-0.5" /></span>
                   </div>
                 </Link>
               );

@@ -5,15 +5,17 @@ import {
   ArrowRight,
   CalendarDays,
   ChevronRight,
-  Clock3,
+  Coffee,
   Film,
   Images,
   Leaf,
+  MapPin,
   Newspaper,
   Play,
   Sparkles,
 } from "lucide-react";
 import { PageTransition } from "@/components/page-transition";
+import { FloatingPetals, type Petal } from "@/components/floating-petals";
 import { getNewsPosts } from "@/lib/store";
 import type { NewsMedia, NewsPost } from "@/lib/types";
 
@@ -25,6 +27,29 @@ export const metadata: Metadata = {
 export const revalidate = 60;
 
 const headingFont = { fontFamily: 'Cambria, "Times New Roman", serif' };
+
+const HERO_PETALS: Petal[] = [
+  { top: "8%", right: "8%", size: 26, color: "#F6CBD9", centerColor: "#FFFCED", delay: 0, duration: 7, rotate: 8 },
+  { bottom: "14%", left: "4%", size: 18, color: "#F7DE94", centerColor: "#184d39", delay: 1.2, duration: 8, rotate: -10, opacity: 0.55 },
+];
+
+function PetalMark({
+  className = "h-4 w-4",
+  centerColor = "#F7DE94",
+}: {
+  className?: string;
+  centerColor?: string;
+}) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} aria-hidden="true">
+      <circle cx="12" cy="6.5" r="4.4" fill="currentColor" />
+      <circle cx="12" cy="17.5" r="4.4" fill="currentColor" />
+      <circle cx="6.5" cy="12" r="4.4" fill="currentColor" />
+      <circle cx="17.5" cy="12" r="4.4" fill="currentColor" />
+      <circle cx="12" cy="12" r="3.1" fill={centerColor} />
+    </svg>
+  );
+}
 
 function dateText(value: string) {
   return new Intl.DateTimeFormat("vi-VN", { day: "2-digit", month: "2-digit", year: "numeric" }).format(new Date(value));
@@ -49,7 +74,7 @@ function NewsPreview({ post, compact = false }: { post: NewsPost; compact?: bool
 
   if (!cover) {
     return (
-      <div className="soft-grid grid h-full place-items-center bg-[#c7db95]/45 p-6">
+      <div className="soft-grid grid h-full place-items-center bg-[#C7DB95]/35 p-6">
         <Image src="/sweet-pea-logo.png" alt="Sweet Pea" width={180} height={180} className={compact ? "w-14 rounded-full opacity-90" : "w-28 rounded-full opacity-90 sm:w-36"} />
       </div>
     );
@@ -64,7 +89,7 @@ function NewsPreview({ post, compact = false }: { post: NewsPost; compact?: bool
         </>
       ) : (
         // eslint-disable-next-line @next/next/no-img-element
-        <img src={cover.url} alt={post.title} loading="lazy" decoding="async" className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.02]" />
+        <img src={cover.url} alt={post.title} loading="lazy" decoding="async" className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]" />
       )}
       {cover.type === "gif" ? <span className="absolute left-2 top-2 rounded-full bg-[#184d39]/88 px-2 py-1 text-[9px] font-extrabold text-white">GIF</span> : null}
       {media.length > 1 ? <span className="absolute bottom-2 right-2 inline-flex items-center gap-1 rounded-full bg-[#184d39]/88 px-2.5 py-1.5 text-[9px] font-extrabold text-white"><Images size={11} /> {media.length}</span> : null}
@@ -88,11 +113,17 @@ export default async function NewsPage() {
   return (
     <PageTransition>
       <section className="relative overflow-hidden border-b border-[#184d39]/10 bg-[#fffced]">
-        <div className="pointer-events-none absolute -left-24 top-0 h-72 w-72 rounded-full bg-[#c7db95]/45 blur-3xl" />
+        <div className="pointer-events-none absolute -left-24 top-0 h-72 w-72 rounded-full bg-[#C7DB95]/45 blur-3xl" />
+        <div className="pointer-events-none absolute -right-16 bottom-0 h-56 w-56 rounded-full bg-[#F6CBD9]/30 blur-3xl" />
+        <FloatingPetals petals={HERO_PETALS} className="hidden sm:block" />
+
         <div className="container-shell relative grid gap-8 py-10 sm:py-14 lg:grid-cols-[1fr_0.9fr] lg:items-center lg:gap-12 lg:py-16">
           <div className="max-w-2xl">
-            <span className="inline-flex items-center gap-2 rounded-full border border-[#184d39]/10 bg-[#c7db95]/42 px-4 py-2 text-xs font-extrabold uppercase tracking-[0.16em] text-[#184d39]"><Newspaper size={15} /> Bản tin Sweet Pea</span>
-            <h1 style={headingFont} className="mt-5 text-[clamp(3.1rem,7vw,5.7rem)] font-bold leading-[0.93] tracking-[-0.055em] text-[#184d39]">Chuyện mới<span className="mt-1 block italic font-normal text-[#718e62]">từ căn bếp.</span></h1>
+            <span className="inline-flex items-center gap-2 rounded-full border border-[#184d39]/10 bg-[#C7DB95]/42 px-4 py-2 text-xs font-extrabold uppercase tracking-[0.16em] text-[#184d39]"><Newspaper size={15} /> Bản tin Sweet Pea</span>
+            <h1 style={headingFont} className="mt-5 text-[clamp(3.1rem,7vw,5.7rem)] font-bold leading-[0.93] tracking-[-0.055em] text-[#184d39]">
+              Chuyện mới
+              <span className="mt-1 block font-normal italic text-[#C97B95] underline decoration-wavy decoration-2 decoration-[#F6CBD9] underline-offset-[10px]">từ căn bếp.</span>
+            </h1>
             <p className="mt-6 max-w-xl text-base leading-8 text-[#184d39]/62 sm:text-lg">Món mới, những buổi hẹn nhỏ, hình ảnh, video và câu chuyện Sweet Pea muốn lưu lại cùng bạn.</p>
             <div className="mt-7 flex flex-wrap gap-3 text-sm font-semibold text-[#184d39]/70">
               <span className="inline-flex items-center gap-2 rounded-full border border-[#184d39]/10 bg-white/65 px-4 py-2.5"><Newspaper size={16} /> {posts.length} bài viết</span>
@@ -100,19 +131,26 @@ export default async function NewsPage() {
             </div>
           </div>
 
-          <div className="overflow-hidden rounded-[2rem] border border-[#184d39]/12 bg-[#c7db95]/22 p-2 shadow-[0_22px_60px_rgba(24,77,57,0.1)]">
+          <div className="relative rounded-[2rem] border border-[#184d39]/12 bg-[#C7DB95]/22 p-2 shadow-[0_22px_60px_rgba(24,77,57,0.1)]">
             {featured ? (
               <Link href={`/news/${featured.id}`} className="group relative block overflow-hidden rounded-[1.6rem] bg-[#fffced]">
                 <div className="aspect-[16/10] overflow-hidden"><NewsPreview post={featured} /></div>
                 <div className="absolute inset-x-3 bottom-3 rounded-[1.25rem] bg-[#184d39]/92 p-4 text-white shadow-lg backdrop-blur sm:inset-x-4 sm:bottom-4 sm:p-5">
-                  <div className="flex flex-wrap items-center gap-2 text-[10px] font-extrabold uppercase tracking-[0.14em] text-[#c7db95]">
+                  <div className="flex flex-wrap items-center gap-2 text-[10px] font-extrabold uppercase tracking-[0.14em] text-[#C7DB95]">
                     {featured.is_featured ? <><Sparkles size={13} /> Nổi bật</> : <><CalendarDays size={13} /> Mới nhất</>}
                     {(featured.media || []).some((item) => item.type === "video") ? <span className="inline-flex items-center gap-1"><Film size={12} /> Có video</span> : null}
                   </div>
                   <p style={headingFont} className="mt-2 line-clamp-2 text-xl font-bold leading-tight sm:text-2xl">{featured.title}</p>
                 </div>
               </Link>
-            ) : <div className="grid aspect-[16/10] place-items-center rounded-[1.6rem] bg-[#c7db95]/35 text-[#184d39]">Chưa có bản tin.</div>}
+            ) : <div className="grid aspect-[16/10] place-items-center rounded-[1.6rem] bg-[#C7DB95]/35 text-[#184d39]">Chưa có bản tin.</div>}
+
+            <span
+              aria-hidden="true"
+              className="absolute -top-3 -right-3 z-10 grid h-9 w-9 -rotate-[10deg] place-items-center rounded-full border-2 border-dashed border-[#184d39]/20 bg-[#F6CBD9] shadow-[0_6px_16px_rgba(24,77,57,0.16)] sm:h-11 sm:w-11"
+            >
+              <PetalMark className="h-4 w-4 text-[#184d39] sm:h-5 sm:w-5" centerColor="#FFFCED" />
+            </span>
           </div>
         </div>
       </section>
@@ -120,24 +158,34 @@ export default async function NewsPage() {
       <section className="bg-[#fffced] py-12 sm:py-16 lg:py-20">
         <div className="container-shell grid gap-8 lg:grid-cols-[18rem_minmax(0,1fr)] lg:items-start xl:gap-12">
           <aside className="order-2 grid gap-5 lg:order-1 lg:sticky lg:top-24">
-            <section className="overflow-hidden rounded-[1.7rem] border border-[#184d39]/10 bg-white/50 shadow-[0_14px_40px_rgba(24,77,57,0.04)]">
+            <section className="overflow-hidden rounded-[1.7rem] border border-[#184d39]/10 bg-white/55 shadow-[0_14px_40px_rgba(24,77,57,0.05)]">
+              <div className="h-[3px] w-full bg-gradient-to-r from-[#184d39] to-[#C7DB95]" />
               <div className="border-b border-[#184d39]/10 px-5 py-4"><p className="text-[10px] font-extrabold uppercase tracking-[0.16em] text-[#184d39]/52">Bài viết mới nhất</p></div>
               <div className="divide-y divide-[#184d39]/8">
                 {latest.length ? latest.map((post) => (
-                  <Link key={post.id} href={`/news/${post.id}`} className="group flex gap-3 p-4 transition hover:bg-[#c7db95]/14">
-                    <div className="h-16 w-20 shrink-0 overflow-hidden rounded-xl border border-[#184d39]/10 bg-[#c7db95]/24"><NewsPreview post={post} compact /></div>
-                    <div className="min-w-0"><p className="text-[9px] font-bold uppercase tracking-[0.08em] text-[#184d39]/45">{dateText(post.published_at)}</p><h3 className="mt-1 line-clamp-2 text-sm font-bold leading-5 text-[#184d39]">{post.title}</h3></div>
+                  <Link key={post.id} href={`/news/${post.id}`} className="group flex gap-3 p-4 transition hover:bg-[#C7DB95]/16">
+                    <div className="h-16 w-20 shrink-0 overflow-hidden rounded-xl border border-[#184d39]/10 bg-[#C7DB95]/24"><NewsPreview post={post} compact /></div>
+                    <div className="min-w-0"><p className="text-[9px] font-bold uppercase tracking-[0.08em] text-[#184d39]/45">{dateText(post.published_at)}</p><h3 className="mt-1 line-clamp-2 text-sm font-bold leading-5 text-[#184d39] transition group-hover:text-[#C97B95]">{post.title}</h3></div>
                   </Link>
                 )) : <p className="p-5 text-sm text-[#184d39]/55">Chưa có bài viết.</p>}
               </div>
             </section>
 
-            <section className="rounded-[1.7rem] border border-[#184d39]/10 bg-[#c7db95]/24 p-5">
-              <p className="text-[10px] font-extrabold uppercase tracking-[0.16em] text-[#184d39]/55">Khám phá</p>
+            <section className="rounded-[1.7rem] border border-[#184d39]/10 bg-[#C7DB95]/24 p-5">
+              <p className="inline-flex items-center gap-2 text-[10px] font-extrabold uppercase tracking-[0.16em] text-[#184d39]/60"><PetalMark className="h-3.5 w-3.5 text-[#C97B95]" /> Khám phá</p>
               <nav className="mt-3 divide-y divide-[#184d39]/10 text-sm font-bold text-[#184d39]">
-                <Link href="/menu" className="flex items-center justify-between py-3">Menu tại tiệm <ChevronRight size={16} /></Link>
-                <Link href="/about" className="flex items-center justify-between py-3">Câu chuyện của tiệm <ChevronRight size={16} /></Link>
-                <Link href="/contact" className="flex items-center justify-between py-3">Địa chỉ & liên hệ <ChevronRight size={16} /></Link>
+                <Link href="/menu" className="flex items-center justify-between gap-3 py-3 transition hover:text-[#123e2e]">
+                  <span className="flex items-center gap-2.5"><Coffee size={15} className="text-[#184d39]/55" /> Menu tại tiệm</span>
+                  <ChevronRight size={16} />
+                </Link>
+                <Link href="/about" className="flex items-center justify-between gap-3 py-3 transition hover:text-[#123e2e]">
+                  <span className="flex items-center gap-2.5"><Leaf size={15} className="text-[#184d39]/55" /> Câu chuyện của tiệm</span>
+                  <ChevronRight size={16} />
+                </Link>
+                <Link href="/contact" className="flex items-center justify-between gap-3 py-3 transition hover:text-[#123e2e]">
+                  <span className="flex items-center gap-2.5"><MapPin size={15} className="text-[#184d39]/55" /> Địa chỉ & liên hệ</span>
+                  <ChevronRight size={16} />
+                </Link>
               </nav>
             </section>
           </aside>
@@ -145,7 +193,7 @@ export default async function NewsPage() {
           <main className="order-1 min-w-0 lg:order-2">
             <div className="flex flex-col gap-3 border-b border-[#184d39]/10 pb-5 sm:flex-row sm:items-end sm:justify-between">
               <div><p className="text-xs font-extrabold uppercase tracking-[0.16em] text-[#184d39]/52">Sweet Pea Journal</p><h2 style={headingFont} className="mt-2 text-3xl font-bold tracking-[-0.035em] text-[#184d39] sm:text-4xl">Tất cả bản tin</h2></div>
-              <Link href="/menu" className="focus-ring inline-flex w-fit items-center gap-2 rounded-full border border-[#184d39]/12 bg-[#c7db95]/18 px-4 py-2.5 text-sm font-bold text-[#184d39]">Xem menu <ArrowRight size={16} /></Link>
+              <Link href="/menu" className="focus-ring inline-flex w-fit items-center gap-2 rounded-full border border-[#184d39]/12 bg-[#C7DB95]/22 px-4 py-2.5 text-sm font-bold text-[#184d39] transition hover:bg-[#C7DB95]/38">Xem menu <ArrowRight size={16} /></Link>
             </div>
 
             {posts.length ? (
@@ -155,23 +203,28 @@ export default async function NewsPage() {
                   const videoCount = media.filter((item) => item.type === "video").length;
                   return (
                     <article key={post.id} className="group grid gap-5 py-7 sm:grid-cols-[15rem_minmax(0,1fr)] sm:items-center lg:grid-cols-[17rem_minmax(0,1fr)] lg:py-8">
-                      <Link href={`/news/${post.id}`} className="overflow-hidden rounded-[1.45rem] border border-[#184d39]/10 bg-[#c7db95]/18 p-1.5"><div className="aspect-[16/10] overflow-hidden rounded-[1.15rem]"><NewsPreview post={post} /></div></Link>
+                      <Link href={`/news/${post.id}`} className="overflow-hidden rounded-[1.45rem] border border-[#184d39]/10 bg-[#C7DB95]/18 p-1.5 transition duration-300 group-hover:-translate-y-0.5 group-hover:border-[#C97B95]/30 group-hover:shadow-[0_14px_32px_rgba(24,77,57,0.1)]"><div className="aspect-[16/10] overflow-hidden rounded-[1.15rem]"><NewsPreview post={post} /></div></Link>
                       <div className="min-w-0">
                         <div className="flex flex-wrap items-center gap-2">
                           <span className="inline-flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-[0.14em] text-[#184d39]/48"><CalendarDays size={13} /> {dateText(post.published_at)}</span>
-                          {post.is_featured ? <span className="inline-flex items-center gap-1 rounded-full bg-[#c7db95]/55 px-2.5 py-1 text-[9px] font-extrabold uppercase tracking-[0.1em] text-[#184d39]"><Sparkles size={11} /> Nổi bật</span> : null}
+                          {post.is_featured ? <span className="inline-flex items-center gap-1 rounded-full bg-[#F6CBD9]/55 px-2.5 py-1 text-[9px] font-extrabold uppercase tracking-[0.1em] text-[#184d39]"><Sparkles size={11} /> Nổi bật</span> : null}
                           {media.length > 1 ? <span className="inline-flex items-center gap-1 rounded-full border border-[#184d39]/10 bg-white px-2.5 py-1 text-[9px] font-bold text-[#184d39]/60"><Images size={11} /> {media.length} media</span> : null}
                           {videoCount ? <span className="inline-flex items-center gap-1 rounded-full bg-[#184d39] px-2.5 py-1 text-[9px] font-bold text-white"><Film size={10} /> Video</span> : null}
                         </div>
-                        <h3 style={headingFont} className="mt-3 text-2xl font-bold leading-tight tracking-[-0.025em] text-[#184d39] sm:text-3xl"><Link href={`/news/${post.id}`} className="transition hover:text-[#6f8b63]">{post.title}</Link></h3>
+                        <h3 style={headingFont} className="mt-3 text-2xl font-bold leading-tight tracking-[-0.025em] text-[#184d39] sm:text-3xl"><Link href={`/news/${post.id}`} className="transition hover:text-[#C97B95]">{post.title}</Link></h3>
                         <p className="mt-3 line-clamp-3 text-sm leading-7 text-[#184d39]/58 sm:text-[0.96rem]">{post.excerpt}</p>
-                        <Link href={`/news/${post.id}`} className="focus-ring mt-4 inline-flex items-center gap-2 text-sm font-extrabold text-[#184d39]">Đọc bản tin <ArrowRight size={16} /></Link>
+                        <Link href={`/news/${post.id}`} className="focus-ring mt-4 inline-flex items-center gap-2 text-sm font-extrabold text-[#184d39]">Đọc bản tin <ArrowRight size={16} className="transition group-hover:translate-x-0.5" /></Link>
                       </div>
                     </article>
                   );
                 })}
               </div>
-            ) : <div className="mt-7 rounded-[2rem] border border-dashed border-[#184d39]/15 bg-[#c7db95]/18 p-12 text-center text-[#184d39]/55"><Leaf className="mx-auto text-[#184d39]/60" /><p className="mt-3 font-bold text-[#184d39]">Tiệm đang chuẩn bị bản tin đầu tiên.</p></div>}
+            ) : (
+              <div className="mt-7 rounded-[2rem] border border-dashed border-[#184d39]/15 bg-[#C7DB95]/18 p-12 text-center text-[#184d39]/55">
+                <PetalMark className="mx-auto h-8 w-8 text-[#C97B95]" />
+                <p className="mt-3 font-bold text-[#184d39]">Tiệm đang chuẩn bị bản tin đầu tiên.</p>
+              </div>
+            )}
           </main>
         </div>
       </section>
